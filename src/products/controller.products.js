@@ -7,7 +7,13 @@ const products = [];
 
 //get all products
 router.get('/', (req, res ) =>{
-res.json({message: products})
+//res.json({message: products})
+
+products.forEach(element => {
+    console.log(element)
+});
+
+res.render('home.handlebars', {products});
 })
 
 //get product with ID
@@ -25,7 +31,7 @@ router.post('/', (req, res ) =>{
     const { title, description,code,price,stock,category} =req.body;
 
     //Create json
-    const product=new ProductManager(title, description,code,price,stock,category);
+    const product={title, description,code,price,stock,category};
     ProductManager.addProduct(product);
 
     products.push(product)
