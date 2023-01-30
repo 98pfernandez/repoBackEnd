@@ -7,12 +7,8 @@ const products = [];
 
 //get all products
 router.get('/', (req, res ) =>{
+    
 //res.json({message: products})
-
-products.forEach(element => {
-    console.log(element)
-});
-
 res.render('home.handlebars', {products});
 })
 
