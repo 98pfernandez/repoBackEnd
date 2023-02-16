@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "56ad2849-562f-4b42-880c-470c8f55b834",
+		"_postman_id": "10ddecf1-14f3-44ba-8c75-612aa999c1dc",
 		"name": "Primera entrega API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -123,6 +123,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "deleteAllProducts",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -135,7 +154,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/carts/0",
+							"raw": "http://localhost:8080/carts/63eea30561cf8c231e16529",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -143,7 +162,7 @@
 							"port": "8080",
 							"path": [
 								"carts",
-								"0"
+								"63eea30561cf8c231e16529"
 							]
 						}
 					},

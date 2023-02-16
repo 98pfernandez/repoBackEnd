@@ -1,35 +1,59 @@
-const { Router } = require ('express')
-const CartManager= require ('./cartManager.js')
+const { Router } = require('express')
+const CartManager = require('../dao/cartManager.js')
+const cartModel = require('../dao/models/cart.models.js')
 
 const router = Router();
 
 const carts = [];
 
 //get all carts
-router.post('/', (req, res ) =>{
-    const { products} =req.body;
+router.post('/', async(req, res) => {
 
-    //Create json
-    const cart=new CartManager(products);
-    CartManager.addProduct(cart);
 
-    carts.push(cart)
+    try {
+        const { products } = req.body;
 
-    res.json({message: "the cart was added"})
-    })
+        if (!products) {
+            res.status(400).json('missing parametrs')
+        }
 
-    //get all carts
-    router.get('/', (req,res)=>{
-        res.json({message: carts})
-    })
+       //Create json
+       const cart = new CartManager(products);
+       CartManager.addProduct(cart);
 
-    //get cart by id
-    router.get('/:cid', (req,res)=>{
-        let idCart=req.params.cid;
+       carts.push(cart)
 
-        let cart = carts.find(cart=>cart.id==idCart);
+        await cartModel.create(cart);
+        res.json({ message: "the cart was added" })
 
-        res.json({message: cart===undefined? "cart not found":cart})
-    })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+//get all carts
+router.get('/', async (req, res) => {
+
+    try {
+        const cartDB = await cartModel.find();
+
+        // res.json({message: productsDB}) 
+        res.json({ result: 'ok', payload: cartDB })
+    } catch (error) {
+        console.log('cannot get carts from mongoose ' + error)
+    }
+})
+
+//get cart by id
+router.get('/:cid', async (req, res) => {
+    let idCart = req.params.cid;
+
+    try {
+        const cartDB = await cartModel.find({_id:idCart});
+        res.json({ message: cartDB })
+    } catch (error) {
+        res.status(200).json('cart not found')
+    }
+})
 
 module.exports = router;
