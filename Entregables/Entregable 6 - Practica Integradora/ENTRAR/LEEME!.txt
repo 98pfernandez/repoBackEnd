@@ -1,0 +1,1 @@
+Levantar servidor con node, no con nodemon. Ya que en la escritura de archivos se reinicia el servidor y pierde los datos.
