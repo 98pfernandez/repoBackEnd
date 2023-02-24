@@ -1,8 +1,12 @@
 //Levanta el servidor
-const express = require('express');
-const routes = require('./routes');
-const mongoose= require('mongoose')
-const handlebars = require('express-handlebars');
+import express from 'express';
+import routes from './routes/index.js';
+import mongoose from 'mongoose';
+import handlebars from 'express-handlebars';
+import {Server}  from 'socket.io';
+import __dirname from './public/js/utils.js';
+import {arrayProducts} from './products/controller.products.js'
+import chatModel from './dao/models/chat.models.js'
 const port = 8080; 
 
 const app=express();
@@ -29,6 +33,40 @@ mongoose.connect('mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.ne
     }
 })
 
-app.listen(port, ()=>{
+const newMessages=[];
+
+//static files
+app.use(express.static(__dirname))
+
+const httpServer=app.listen(port, ()=>{
     console.log("server running at port" + port)
 })
+
+const io =new Server(httpServer);
+
+io.on('connection', (socket)=>{
+console.log("Usuario conectado!")
+
+socket.on('refresh', ()=>{
+    io.emit('showAllProducts', arrayProducts);
+})
+
+
+socket.on('addMessageDB', async (message)=>{
+
+    try {
+        await chatModel.create(message);
+        io.emit('showNewMessageAllUserConnected');
+    } catch (error) {
+        alert("database error")
+    }
+
+})
+
+socket.on('getMessageLogs', async ()=>{
+    const chatLogsDB = await chatModel.find();
+    io.emit('showMessagesLog', chatLogsDB);
+})
+
+}
+)

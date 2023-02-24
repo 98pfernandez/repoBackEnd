@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 const pathAllProducts = './fileSystem/carts.json';
 
 class Cart {
@@ -25,4 +25,4 @@ class Cart {
     
     }
 
-    module.exports = Cart;
+    export default Cart;

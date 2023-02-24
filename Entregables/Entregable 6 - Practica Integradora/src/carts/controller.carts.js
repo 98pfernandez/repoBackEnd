@@ -1,6 +1,6 @@
-const { Router } = require('express')
-const CartManager = require('../dao/cartManager.js')
-const cartModel = require('../dao/models/cart.models.js')
+import Router from 'express';
+import CartManager from '../dao/cartManager.js'
+import cartModel from '../dao/models/cart.models.js'
 
 const router = Router();
 
@@ -56,4 +56,4 @@ router.get('/:cid', async (req, res) => {
     }
 })
 
-module.exports = router;
+export default router;

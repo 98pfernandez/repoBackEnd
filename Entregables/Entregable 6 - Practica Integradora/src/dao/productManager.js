@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 const pathAllProducts = './fileSystem/products.json';
 
 class Product {
@@ -94,4 +94,4 @@ class Product {
         return arrayProductsParseObject;
     }
 
-    module.exports = Product;
+export default Product;

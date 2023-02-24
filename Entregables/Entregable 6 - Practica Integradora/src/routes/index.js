@@ -1,9 +1,13 @@
-const products = require('../products/controller.products');
-const carts = require('../carts/controller.carts');
+import {products} from '../products/controller.products.js';
+import {realTimeProducts} from '../products/controller.realTimeProducts.js';
+import carts from '../carts/controller.carts.js';
+import {chats} from '../chats/controller.chats.js';
 
 const routes = (app) => {
     app.use('/products', products)
     app.use('/carts', carts)
+    app.use('/chats', chats)
+    app.use('/realTimeProducts', realTimeProducts)
 }
 
-module.exports = routes;
+export default routes;

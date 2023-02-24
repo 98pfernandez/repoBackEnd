@@ -1,6 +1,6 @@
-const { Router } = require('express')
-const ProductManager = require('../dao/productManager.js')
-const productModel = require('../dao/models/products.models.js')
+import Router from 'express'
+import ProductManager from '../dao/productManager.js'
+import productModel from '../dao/models/products.models.js'
 
 const router = Router();
 
@@ -120,4 +120,4 @@ router.delete('/', async (req, res) => {
 
 })
 
-module.exports = router;
+export {router as products, products as arrayProducts};
