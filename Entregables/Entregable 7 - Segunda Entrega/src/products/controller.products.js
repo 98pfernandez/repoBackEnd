@@ -10,16 +10,22 @@ const router = Router();
 const products = [];
 
 //get all products with query params
-router.get('/:query/:queryValue/:limit/:page/:sort', async (req, res) => {
+router.get('/', async (req, res) => {
 
-    let limit = req.params.limit;
-    let page = req.params.page ;
-    let sort = req.params.sort;
-    let query = req.params.query ;
-    let queryValue = req.params.queryValue;
+    let limit = req.query.limit!=undefined? req.query.limit : 10;
+    let page =  req.query.page!=undefined? req.query.page : 1;
+    let sort =  req.query.sort!=undefined? req.query.sort : null;
 
-    const responseDB=await productDao.find(query,queryValue, limit,page,sort)
+    let query =  req.query.query!=undefined? req.query.query : null;
+    let queryData =  req.query.queryData!=undefined? req.query.queryData : null;
 
+    //error prevent
+    if(query==null || queryData==null){
+        query=null;
+        queryData=null;
+    }
+    
+    const responseDB=await productDao.find(query,queryData, limit,page,sort)
     res.json({message: responseDB}) 
 
 

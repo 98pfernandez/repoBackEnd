@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "10ddecf1-14f3-44ba-8c75-612aa999c1dc",
+		"_postman_id": "63252528-bdea-4ce9-acf1-a0ffdadbbef2",
 		"name": "Primera entrega API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,7 +9,7 @@
 			"name": "products",
 			"item": [
 				{
-					"name": "getAllProducts",
+					"name": "getAllProductsWithoutParameters",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -22,6 +22,68 @@
 							"port": "8080",
 							"path": [
 								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllProductsWithParameters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/?query=_id&queryData=63fd4e4e63fdc058b8fbfc8c&limit=5&sort=desc&page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "_id"
+								},
+								{
+									"key": "queryData",
+									"value": "63fd4e4e63fdc058b8fbfc8c"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "desc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"0"
 							]
 						}
 					},
@@ -50,26 +112,6 @@
 							"port": "8080",
 							"path": [
 								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getProductByID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/products/0",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"products",
-								"0"
 							]
 						}
 					},
