@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "63252528-bdea-4ce9-acf1-a0ffdadbbef2",
+		"_postman_id": "871afbea-c4fa-4390-980e-a481d5e5e1e5",
 		"name": "Primera entrega API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -84,6 +84,26 @@
 							"path": [
 								"products",
 								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadProductsLocalFile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/loadLocalFile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"loadLocalFile"
 							]
 						}
 					},
@@ -191,6 +211,25 @@
 			"name": "carts",
 			"item": [
 				{
+					"name": "getAllCarts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "getCartById",
 					"request": {
 						"method": "GET",
@@ -211,13 +250,21 @@
 					"response": []
 				},
 				{
-					"name": "addCart",
+					"name": "createCartWithOutProducts",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "addCartWithProducts",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"products\":[\r\n        \"asdfewf\",\r\n        \"wfgewgewg\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"products\":[\r\n        {\r\n                        \"_id\": \"63fe3cd00b89072ae8fc701a\",\r\n                        \"title\": \"Veal - Provimi Institlee\",\r\n                        \"description\": null,\r\n                        \"code\": \"67345-0509\",\r\n                        \"price\": 0.31,\r\n                        \"stock\": 9,\r\n                        \"category\": 5587,\r\n                        \"__v\": 0\r\n         }]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -239,9 +286,46 @@
 					"response": []
 				},
 				{
-					"name": "getAllCarts",
+					"name": "addArrayProducts",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "addProductToCart",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productID\":\"63fe3cd00b89072ae8fc701a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/carts/63fe402c08cd816efedc028f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"carts",
+								"63fe402c08cd816efedc028f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllCarts",
+					"request": {
+						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/carts",
@@ -252,6 +336,28 @@
 							"port": "8080",
 							"path": [
 								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProductFromCart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/carts/63fe402c08cd816efedc028f/products/63fe3cd00b89072ae8fc701a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"carts",
+								"63fe402c08cd816efedc028f",
+								"products",
+								"63fe3cd00b89072ae8fc701a"
 							]
 						}
 					},

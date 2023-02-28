@@ -6,12 +6,12 @@ const router = Router();
 
 const carts = [];
 
-//get all carts
+//create cart without products
 router.post('/', async(req, res) => {
 
 
     try {
-        const { products } = req.body;
+       /* const { products } = req.body;
 
         if (!products) {
             res.status(400).json('missing parametrs')
@@ -23,12 +23,31 @@ router.post('/', async(req, res) => {
 
        carts.push(cart)
 
-        await cartModel.create(cart);
+        await cartModel.create(cart);*/
+        await cartModel.create({});
         res.json({ message: "the cart was added" })
 
     } catch (error) {
         console.log(error)
     }
+})
+
+router.patch('/:cartID', async (req,res)=>{
+    const { cartID } = req.params
+    const { productID } = req.body
+
+    try{
+        const cart = await cartModel.findOne({ _id: cartID})
+        cart.products.push({ product: productID })
+        await cartModel.updateOne({ _id: cartID }, cart)
+
+        res.json({message:'OK!'})
+    }catch(error){
+        res.json({message:'the cart wasnt found'})
+    }
+      
+
+    
 })
 
 //get all carts
@@ -55,5 +74,39 @@ router.get('/:cid', async (req, res) => {
         res.status(200).json('cart not found')
     }
 })
+
+router.delete('/', async (req, res) => {
+
+    try {
+        const productsDB = await cartModel.deleteMany({});
+        res.json({ message:'all carts was deleted' })
+    } catch (error) {
+        res.status(200).json(error)
+    }
+
+})
+
+
+router.delete('/:cartID/products/:productID', async (req, res) => {
+    const { cartID } = req.params
+    const { productID } = req.params
+
+    try {
+        const cart = await cartModel.findOne({ _id: cartID});
+        const prodIndex = cart.products.findIndex((prod) => prod.product == productID);
+
+        if (prodIndex > -1) {
+            cart.products.splice(prodIndex, 1);
+          }
+     await cartModel.updateOne({ _id: cartID }, cart)
+
+        res.json({ message:'product deleted from cart w id: '+ cartID })
+    } catch (error) {
+//res.status(200).json(error)
+        res.json({message:error});
+    }
+
+})
+
 
 export default router;

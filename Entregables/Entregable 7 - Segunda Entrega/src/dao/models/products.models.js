@@ -5,10 +5,15 @@ const productCollection='products';
 
 const productSchema=new mongoose.Schema({
 
-    title:String,
+    title:{
+        type:String,
+        index:true
+    },
     description:String,
-    price:Number
-
+    code:String,
+    price:Number,
+    stock: Number,
+    category: Number
 })
 
 productSchema.plugin(mongoosePaginate)
