@@ -26,11 +26,15 @@ router.get('/', async (req, res) => {
     }
     
     const responseDB=await productDao.find(query,queryData, limit,page,sort)
-    res.json({message: responseDB}) 
+    
+    const products= responseDB;
+    res.render('products.handlebars', {products})
+
+        // res.json({message: responseDB}) 
+    //res.render('home.handlebars', {products});
 
 
     /*res.json({message: products})
-    //res.render('home.handlebars', {products});
     try {
        // const productsDB = await productModel.find();
         // res.json({message: productsDB}) 
@@ -41,17 +45,6 @@ router.get('/', async (req, res) => {
     }*/
 })
 
-//get products without query params
-router.get('/', async (req, res) => {
-    let limit = 10;
-    let page =1;
-    let sort = null;
-    let id=null
-
-    const responseDB=await productDao.find(id,limit,page, sort)
-
-    res.json({message: responseDB}) 
-})
 
 //get product with ID
 router.get('/:productID', async(req, res) => {

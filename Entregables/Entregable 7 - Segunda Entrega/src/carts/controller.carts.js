@@ -11,25 +11,32 @@ router.post('/', async(req, res) => {
 
 
     try {
-       /* const { products } = req.body;
-
-        if (!products) {
-            res.status(400).json('missing parametrs')
-        }
-
-       //Create json
-       const cart = new CartManager(products);
-       CartManager.addProduct(cart);
-
-       carts.push(cart)
-
-        await cartModel.create(cart);*/
         await cartModel.create({});
         res.json({ message: "the cart was added" })
 
     } catch (error) {
         console.log(error)
     }
+})
+
+router.put('/:cid', async (req,res)=>{
+    const { cid } = req.params
+    const { arrayProducts } = req.body
+
+    try{
+        const cart = await cartModel.findOne({ _id: cid})
+
+        arrayProducts.forEach(product => {
+            cart.products.push({ product: product })
+        });
+        await cartModel.updateOne({ _id: cid }, cart)
+
+        res.json({message:'the products were added!'})
+    }catch(error){
+        res.json({message:'the cart wasnt found '+ error})
+    }
+
+   
 })
 
 router.patch('/:cartID', async (req,res)=>{
@@ -45,10 +52,9 @@ router.patch('/:cartID', async (req,res)=>{
     }catch(error){
         res.json({message:'the cart wasnt found'})
     }
-      
-
-    
 })
+
+
 
 //get all carts
 router.get('/', async (req, res) => {
@@ -68,8 +74,10 @@ router.get('/:cid', async (req, res) => {
     let idCart = req.params.cid;
 
     try {
-        const cartDB = await cartModel.find({_id:idCart});
-        res.json({ message: cartDB })
+        const cartDB = await cartModel.findOne({ _id: idCart}).lean();
+        const cart= cartDB.products;
+        res.render('cart.handlebars', {cart})
+        
     } catch (error) {
         res.status(200).json('cart not found')
     }
@@ -86,6 +94,22 @@ router.delete('/', async (req, res) => {
 
 })
 
+router.delete('/:cartID', async (req, res) => {
+    const { cartID } = req.params
+
+    try {
+        const cart = await cartModel.findOne({ _id: cartID});
+        //clear array
+       cart.products=[]
+
+     await cartModel.updateOne({ _id: cartID }, cart)
+
+        res.json({ message:'all products were deleted from the cart w id '+ cartID})
+    } catch (error) {
+        res.json({message:error});
+    }
+
+})
 
 router.delete('/:cartID/products/:productID', async (req, res) => {
     const { cartID } = req.params

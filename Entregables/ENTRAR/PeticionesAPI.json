@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "871afbea-c4fa-4390-980e-a481d5e5e1e5",
+		"_postman_id": "f8b5f738-b7ea-476b-8316-8cf2fecda651",
 		"name": "Primera entrega API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -235,7 +235,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/carts/63eea30561cf8c231e16529",
+							"raw": "http://localhost:8080/carts/63fee40e2cb8d2c5119d356a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -243,7 +243,7 @@
 							"port": "8080",
 							"path": [
 								"carts",
-								"63eea30561cf8c231e16529"
+								"63fee40e2cb8d2c5119d356a"
 							]
 						}
 					},
@@ -253,27 +253,9 @@
 					"name": "createCartWithOutProducts",
 					"request": {
 						"method": "POST",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "addCartWithProducts",
-					"request": {
-						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"products\":[\r\n        {\r\n                        \"_id\": \"63fe3cd00b89072ae8fc701a\",\r\n                        \"title\": \"Veal - Provimi Institlee\",\r\n                        \"description\": null,\r\n                        \"code\": \"67345-0509\",\r\n                        \"price\": 0.31,\r\n                        \"stock\": 9,\r\n                        \"category\": 5587,\r\n                        \"__v\": 0\r\n         }]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/carts",
-							"protocol": "http",
+							"raw": "localhost:8080/carts",
 							"host": [
 								"localhost"
 							],
@@ -289,7 +271,28 @@
 					"name": "addArrayProducts",
 					"request": {
 						"method": "PUT",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"arrayProducts\":[\r\n             {\r\n                \"_id\": \"63fe3cd00b89072ae8fc6ee0\",\r\n                \"title\": \"Muffin - Banana Nut Indivtitleual\",\r\n                \"description\": null,\r\n                \"code\": \"52584-153\",\r\n                \"price\": 0.03,\r\n                \"stock\": 19,\r\n                \"category\": 4057,\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"63fe3cd00b89072ae8fc7042\",\r\n                \"title\": \"Ice Cream Bar - Rolo Cone\",\r\n                \"description\": null,\r\n                \"code\": \"64117-161\",\r\n                \"price\": 0.06,\r\n                \"stock\": 52,\r\n                \"category\": 98,\r\n                \"__v\": 0\r\n            }\r\n]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/carts/63fee40e2cb8d2c5119d356a63fee40e2cb8d2c5119d356a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"carts",
+								"63fee40e2cb8d2c5119d356a63fee40e2cb8d2c5119d356a"
+							]
+						}
 					},
 					"response": []
 				},
@@ -300,7 +303,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productID\":\"63fe3cd00b89072ae8fc701a\"\r\n}",
+							"raw": "{\r\n    \"productID\":\"63fed5432deb47795b0dc6e5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -308,7 +311,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/carts/63fe402c08cd816efedc028f",
+							"raw": "http://localhost:8080/carts/63fee40e2cb8d2c5119d356a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -316,7 +319,7 @@
 							"port": "8080",
 							"path": [
 								"carts",
-								"63fe402c08cd816efedc028f"
+								"63fee40e2cb8d2c5119d356a"
 							]
 						}
 					},
@@ -358,6 +361,26 @@
 								"63fe402c08cd816efedc028f",
 								"products",
 								"63fe3cd00b89072ae8fc701a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllProductsFromACart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/carts/63fe90bee4d3a9dc93abebd1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"carts",
+								"63fe90bee4d3a9dc93abebd1"
 							]
 						}
 					},

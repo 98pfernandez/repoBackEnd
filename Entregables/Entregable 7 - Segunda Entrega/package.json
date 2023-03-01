@@ -15,5 +15,8 @@
     "mongoose": "^6.10.0",
     "mongoose-paginate-v2": "^1.7.1"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "handlebars": "^4.5.0"
+  }
 }

@@ -4,7 +4,7 @@ class ProductDao {
   //metodo para buscar en la BD para la coleccion products
   async find(query, queryData, limit, page, sort) {
     try {
-      const products = await productModel.paginate({ [query]: queryData }, { limit, page, sort: { price: sort } })
+      const products = await productModel.paginate({ [query]: queryData }, { limit, page, sort: { price: sort }, lean:true })
 
       let urlBase = 'http://localhost:8080/products/?'
 
