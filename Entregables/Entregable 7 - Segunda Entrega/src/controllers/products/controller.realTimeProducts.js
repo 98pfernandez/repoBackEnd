@@ -5,8 +5,6 @@ const router = Router();
 
 router.get('/', (req, res ) =>{
     //res.json({message: products})
-console.log(arrayProducts)
-
     res.render('realTimeProducts.handlebars', {arrayProducts});
     })
 

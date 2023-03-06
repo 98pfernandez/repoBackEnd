@@ -1,4 +1,4 @@
-import productModel from './models/products.models.js'
+import productModel from '../models/products.models.js'
 
 class ProductDao {
   //metodo para buscar en la BD para la coleccion products

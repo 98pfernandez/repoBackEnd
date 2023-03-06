@@ -1,7 +1,7 @@
-import {products} from '../products/controller.products.js';
-import {realTimeProducts} from '../products/controller.realTimeProducts.js';
-import carts from '../carts/controller.carts.js';
-import {chats} from '../chats/controller.chats.js';
+import {products} from '../controllers/products/controller.products.js';
+import {realTimeProducts} from '../controllers/products/controller.realTimeProducts.js';
+import carts from '../controllers/carts/controller.carts.js';
+import {chats} from '../controllers/chats/controller.chats.js';
 
 const routes = (app) => {
     app.use('/products', products)

@@ -2,9 +2,11 @@
   "name": "abc",
   "version": "1.0.0",
   "description": "",
-  "main": "Untitled-1.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js",
+    "start:dev": "nodemon ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,6 @@
   },
   "type": "module",
   "devDependencies": {
-    "handlebars": "^4.5.0"
+    "handlebars": "^4.7.7"
   }
 }

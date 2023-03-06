@@ -1,8 +1,8 @@
 import Router from 'express'
-import ProductManager from '../dao/productManager.js'
-import productModel from '../dao/models/products.models.js'
-import FilesDao from '../dao/File.dao.js';
-import ProductsDao from '../dao/Products.dao.js'
+import ProductManager from '../../dao/fileSystemManager/productManager.js'
+import productModel from '../../dao/models/products.models.js'
+import FilesDao from '../../dao/mongoManager/File.dao.js';
+import ProductsDao from '../../dao/mongoManager/Products.dao.js'
 
 const productDao=new ProductsDao();
 const router = Router();
@@ -61,7 +61,7 @@ try {
 
 //Insert many products from a local JSON file.
 router.post('/loadLocalFile', async(req,res)=>{
-        let path=process.cwd()+'/files/Products.json';
+        let path=process.cwd()+'/assets/Products.json';
         const fileDao=new FilesDao(path)
         const products= await fileDao.loadItems()
         const response =await productDao.insertMany(products);
