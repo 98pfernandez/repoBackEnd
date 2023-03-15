@@ -18,7 +18,8 @@
     "express-handlebars": "^6.0.7",
     "express-session": "^1.17.3",
     "mongoose": "^6.10.0",
-    "mongoose-paginate-v2": "^1.7.1"
+    "mongoose-paginate-v2": "^1.7.1",
+    "npm": "^9.6.1"
   },
   "type": "module",
   "devDependencies": {

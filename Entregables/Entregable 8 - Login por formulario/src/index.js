@@ -14,12 +14,8 @@ import cookieParser from 'cookie-parser';
 const port = 8080;
 const app = express();
 
-
 //Express
 app.use(express.json());
-
-//Routes
-routes(app);
 
 //HandleBars
 app.engine('handlebars', handlebars.engine());
@@ -31,15 +27,15 @@ app.use(express.static(__dirname))
 mongoose.set('strictQuery', false);
 app.use(cookieParser('PABLO123'))
 app.use(session({
-  // store: new fileStorage({ path: __dirname + '/sessions', ttl: 100, retries: 0 }),
-  store: MongoStore.create({
-    mongoUrl: 'mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.net/sessions?retryWrites=true&w=majority',
-    mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-  }),
-  secret: 'PABLO123',
-  resave: false,
-  saveUninitialized: false
-}))
+    // store: new fileStorage({ path: __dirname + '/sessions', ttl: 100, retries: 0 }),
+        store: MongoStore.create({
+      mongoUrl: 'mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.net/sessions?retryWrites=true&w=majority',
+      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+    }),
+    secret: 'loqueQuier4',
+    resave: false,
+    saveUninitialized: false
+  }))
 
 mongoose.connect('mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.net/ecommerce?retryWrites=true&w=majority', (error) => {
     if (error) {
@@ -47,6 +43,9 @@ mongoose.connect('mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.ne
         process.exit();
     }
 })
+
+//Routes
+routes(app);
 
 //Socket IO
 const httpServer = app.listen(port, () => {
