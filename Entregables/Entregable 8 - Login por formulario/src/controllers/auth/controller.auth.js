@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
     if (user.pass !== pass) return res.status(400).json({ error: 'El usuario y la contraseña no coinciden' })
 
     req.session.user = {
-      first_name: user.first_name,
+      first_name: user.name,
       email: user.email
     }
     

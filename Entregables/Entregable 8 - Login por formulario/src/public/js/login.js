@@ -1,4 +1,8 @@
 const form = document.getElementById('formLogin')
+SignUp=document.querySelector("#signup")
+Login=document.querySelector("#login");
+Logout=document.querySelector("#logout");
+
 form.addEventListener('submit', e => {
   e.preventDefault()
 
@@ -14,15 +18,26 @@ form.addEventListener('submit', e => {
   const method = 'POST'
   const body = JSON.stringify(obj)
 
-  fetch(url, {
-    headers,
-    method,
-    body
-  })
-    .then(response => response.json())
-    .then(data => console.log(data))
+  let statusVar;
+    fetch(url, {
+      headers,
+      method,
+      body
+    })
+    .then(response => {
+      statusVar = response.status;
+      return response.json()
+    })
+    .then(data => {
+      console.log(data)
+      //Si el usuario esta correcto entramos al sistema
+      if (statusVar == 201) {
+        document.location.href = '/'
+        Logout.style.display='!none'
+      }
+    })
     .catch(error => console.log(error))
 
 
-  }
+}
 )

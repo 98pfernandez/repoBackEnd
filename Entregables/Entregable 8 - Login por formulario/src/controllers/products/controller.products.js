@@ -10,7 +10,7 @@ const router = Router();
 const products = [];
 
 //get all products with query params
-router.get('/', async (req, res) => {
+router.get('/',async (req, res) => {
 
     let limit = req.query.limit!=undefined? req.query.limit : 10;
     let page =  req.query.page!=undefined? req.query.page : 1;
