@@ -1,63 +1,23 @@
-
-*{
-    margin: 0;
-    padding: 0;
-    color: white;
-}
-
-header{
-    width: 100%;
-    height: 70%;
-    background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgb(56, 56, 56) 35%);
-    display: flex;
-    flex-direction: row;
-    font-size: 3rem;
-}
-
-footer {
-    position:fixed;
-    bottom: 0;
-    width: 100%;
-    height: 60px;   
-    background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgb(56, 56, 56) 35%);
- }
-
-.menuButtons{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-}
-
-#login{
-    margin-right: 2%;
-}
-
-#login:hover{
-    background-color: grey;
-    border-radius: 10%;
-    cursor: pointer;
-}
-#signup:hover{
-    background-color: grey;
-    border-radius: 10%;
-    cursor: pointer;
-}
- 
-#carouselExampleIndicators{
-    margin-bottom: 2% ;
-    margin-top: 2% ;
-    height: 50%;
-    width: 50%;
-}
-
-img{
-    height: 100%;
-    width: 100%;
-}
-
 .centerCarousel{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 1%;
+    height: 100%;
 }
+
+#carouselExampleIndicators {
+    width: 80%;
+  }
+
+.carousel-item{
+    max-width: 100%;
+    height: 80vh;
+}
+  
+  img{
+    max-width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+  

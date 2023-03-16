@@ -8,11 +8,10 @@ res.render('index.handlebars')
 
 router.get('/login', (req, res) => {
     res.render('login.handlebars')
-    
-    
-    req.session.user = {
-      first_name: 'Pablito'
-    }
+  })
+
+  router.get('/signup', (req, res) => {
+    res.render('signup.handlebars')
   })
 
 export {router as viewsController};
