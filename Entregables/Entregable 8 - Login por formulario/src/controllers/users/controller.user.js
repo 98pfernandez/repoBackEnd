@@ -5,10 +5,10 @@ const router = Router()
 
 router.post('/', async (req, res) => {
     try {
-      const { user, email, pass } = req.body
+      const { name, email, pass } = req.body
   
       const newUserInfo = {
-        user,
+        name,
         email,
         pass
       }

@@ -24,9 +24,13 @@
         
         <div><a href="/">ECommerce!</a></div>
         <div class="menuButtons">
+            {{#if condition}}
             <div id="login"><a href="../login">Login</a></div>
             <div id="signup"><a href="../signup">SignUp</a></div>
-            <div style="display: none;" id="logout"><a href="../signup">Logout</a></div>
+            {{else}}
+            <div style="" id="products"><a href="../products">Products</a></div>
+            <div style="" id="logout"><a href="../auth/logout">Logout</a></div>
+            {{/if}}
         </div>
     </header>
 

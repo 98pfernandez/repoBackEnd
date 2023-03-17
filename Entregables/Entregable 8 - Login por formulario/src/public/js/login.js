@@ -1,7 +1,4 @@
 const form = document.getElementById('formLogin')
-SignUp=document.querySelector("#signup")
-Login=document.querySelector("#login");
-Logout=document.querySelector("#logout");
 
 form.addEventListener('submit', e => {
   e.preventDefault()
@@ -33,7 +30,6 @@ form.addEventListener('submit', e => {
       //Si el usuario esta correcto entramos al sistema
       if (statusVar == 201) {
         document.location.href = '/'
-        Logout.style.display='!none'
       }
     })
     .catch(error => console.log(error))

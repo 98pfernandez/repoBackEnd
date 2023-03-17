@@ -26,9 +26,9 @@ router.get('/',async (req, res) => {
     }
     
     const responseDB=await productDao.find(query,queryData, limit,page,sort)
-    
+    let userName= req.session.user.name;
     const products= responseDB;
-    res.render('products.handlebars', {products})
+    res.render('products.handlebars', {products, userName})
 
         // res.json({message: responseDB}) 
     //res.render('home.handlebars', {products});
