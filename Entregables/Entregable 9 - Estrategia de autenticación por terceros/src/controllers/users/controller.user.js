@@ -43,4 +43,9 @@ router.post(
     }
   })
 
+router.get('/failRegister', async (req, res) => {
+  res.json({ error: 'Fallo el registro' });
+});
+
+
 export { router as userController };

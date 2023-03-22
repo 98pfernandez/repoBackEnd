@@ -1,7 +1,7 @@
 import passport from 'passport'
 import passportLocal from 'passport-local'
-import UserModel from '../dao/models/users.models';
-import { hashPassword, validPassword } from '../utils/passwordEncryptor'
+import UserModel from '../dao/models/users.models.js';
+import { hashPassword, validPassword } from '../utils/passwordEncryptor.js'
 
 
 const LocalStrategy = passportLocal.Strategy;
@@ -22,6 +22,8 @@ const initializePassport = () => {
                         return done(null, false);
                     }
 
+                    console.log(password)
+
                     const newUserInfo = {
                         name,
                         email,
@@ -38,4 +40,15 @@ const initializePassport = () => {
         ))
 }
 
-export {initializePassport};
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(async (id, done) => {
+    const user = await UserModel.findById(id);
+    done(null, user);
+  });
+
+
+export  {initializePassport};

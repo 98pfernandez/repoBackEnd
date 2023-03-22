@@ -10,8 +10,9 @@ import chatModel from './dao/models/chat.models.js'
 import session from 'express-session';
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser';
-import initializePassport  from './config/passport.js';
+import {initializePassport}  from './config/passport.js';
 import passport from 'passport';
+import morgan from 'morgan';
 
 const port = 8080;
 const app = express();
@@ -50,6 +51,9 @@ mongoose.connect('mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.ne
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
+
+//morgan
+app.use(morgan('dev'));
 
 //Routes
 routes(app);
