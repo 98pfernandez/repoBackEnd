@@ -31,5 +31,8 @@ form.addEventListener('submit', e => {
       document.location.href = '/'
     }
   })
-  .catch(error => console.log(error))
+  .catch(error => {
+    alert('error')
+    console.log(error)
+  })
 })
