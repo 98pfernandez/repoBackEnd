@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import UserModel from '../../dao/models/users.models.js'
-import {validPassword} from '../../utils/passwordEncryptor.js'
+import { validPassword } from '../../utils/passwordEncryptor.js'
 
 const router = Router()
 
@@ -13,26 +13,32 @@ router.post(
       if (!req.user)
         return res.status(400).json({ error: 'Credenciales invalidas' });
 
+      req.session.user = {
+        name: req.user.name,
+        email: req.user.email,
+        role: req.user.email == 'adminCoder@coder.com' ? 'admin' : 'user'
+      }
+
+      res.status(201).json({ message: 'Sesión iniciada' })
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: 'Internal server error' })
+    }
+  })
+
+router.get('/github',
+  passport.authenticate('github', { scope: ['user:email'] }));
+
+router.get('/gitHubCallBack',
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  async (req, res) => {
+    // Successful authentication, redirect home.
     req.session.user = {
       name: req.user.name,
       email: req.user.email,
-      role: req.user.email=='adminCoder@coder.com'? 'admin':'user'
+      role: req.user.email == 'adminCoder@coder.com' ? 'admin' : 'user'
     }
-    
-    res.status(201).json({ message: 'Sesión iniciada' })
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Internal server error' })
-  }
-})
 
-router.get('/github',
-  passport.authenticate('github', { scope: [ 'user:email' ] }));
-
-  router.get('/gitHubCallBack', 
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  async(req, res) =>{
-    // Successful authentication, redirect home.
     res.redirect('/')
   });
 
@@ -50,4 +56,4 @@ router.get('/logout', (req, res) => {
   })
 })
 
-export {router as authController};
+export { router as authController };
