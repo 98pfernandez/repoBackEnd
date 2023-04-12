@@ -1,0 +1,11 @@
+<h1>Bienvenido al carrito!</h1>
+
+<div id="productList">
+    {{#each cart}}
+    <div class="productDiv">
+        <h3>{{product.title}}</h3>
+        <img class="productImage" src="{{product.image}}" alt="">
+        <div>{{product.price}} US$</div>
+        <div>stock left: {{product.stock}}</div>
+    </div>
+    {{/each}}
