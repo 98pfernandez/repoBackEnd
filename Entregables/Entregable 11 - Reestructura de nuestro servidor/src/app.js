@@ -10,8 +10,14 @@ import MongoStore from 'connect-mongo'
 import passport from 'passport';
 import {initializePassport}  from './config/passport.js';
 import dotenv from 'dotenv';
+import dbConnect from '../db/index.js';
+import flash from 'connect-flash';
 
 const app = express();
+
+
+// Configurar el middleware de mensajes flash
+app.use(flash());
 
 //Variables de entorno:
 dotenv.config({path: '../../.env'})
@@ -48,6 +54,9 @@ app.use(passport.session());
 
 //morgan
 app.use(morgan('dev'));
+
+
+dbConnect();
 
 //Routes
 routes(app);

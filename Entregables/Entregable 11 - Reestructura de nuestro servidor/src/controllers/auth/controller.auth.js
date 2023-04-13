@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import  Router  from 'express';
 import passport from 'passport';
 import UserModel from '../../dao/models/users.models.js'
 import { validPassword } from '../../utils/passwordEncryptor.js'
@@ -7,7 +7,7 @@ const router = Router()
 
 router.post(
   '/',
-  passport.authenticate('login', { failureRedirect: '/auth/failLogin' }),
+  passport.authenticate('login', { failureRedirect: '/auth/failLogin', failureFlash:true }),
   async (req, res) => {
     try {
       if (!req.user)
@@ -45,7 +45,7 @@ router.get('/gitHubCallBack',
 
 
 router.get('/failLogin', (req, res) => {
-  res.json({ error: 'No se pudo iniciar sesión' });
+  res.json({ error: req.flash('error') });
 });
 
 router.get('/logout', (req, res) => {

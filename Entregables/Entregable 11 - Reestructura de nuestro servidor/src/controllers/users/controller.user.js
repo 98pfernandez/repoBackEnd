@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import  Router  from 'express';
 import passport from 'passport';
 
 const router = Router()
 
 router.post(
   '/',
-  passport.authenticate('register', { failureRedirect: '/users/failRegister' }),
+  passport.authenticate('register', { failureRedirect: '/users/failRegister', failureFlash:true }),
   async (req, res) => {
     try {
       res.json({ message: 'Usuario registrado' });
@@ -18,7 +18,7 @@ router.post(
   })
 
 router.get('/failRegister', async (req, res) => {
-  res.json({ error: 'Fallo el registro' });
+  res.json({ error: req.flash('error') });
 });
 
 
