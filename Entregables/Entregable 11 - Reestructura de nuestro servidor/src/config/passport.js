@@ -1,10 +1,15 @@
 import passport from 'passport'
 import passportLocal from 'passport-local'
-import UserModel from '../models/users.models.js';
 import GitHubStrategy from 'passport-github2'
 import { hashPassword, validPassword } from '../utils/passwordEncryptor.js'
+import UserService from '../services/users.service.js';
+import dotenv from "dotenv";
 
+//Variables de entorno:
+dotenv.config({ path: "../../.env" });
+const serverPORT = process.env.SERVER_PORT;
 
+const userService=new UserService();
 const LocalStrategy = passportLocal.Strategy;
 
 const initializePassport = () => {
@@ -16,7 +21,7 @@ const initializePassport = () => {
             async (req, username, password, done) => {
                 const { name, email, pass } = req.body
                 try {
-                    const user = await UserModel.findOne({ email: username });
+                    const user = await userService.findUserByEmail( username );
 
                     if (user) {
                         console.log('user exists');
@@ -29,7 +34,7 @@ const initializePassport = () => {
                         pass: hashPassword(password)
                     }
 
-                    const newUser = await UserModel.create(newUserInfo)
+                    const newUser = await userService.createUser(newUserInfo)
 
                     return done(null, newUser);
                 } catch (error) {
@@ -46,7 +51,7 @@ const initializePassport = () => {
             },
             async (username, password, done) => {
                 try {
-                    const user = await UserModel.findOne({ email: username });
+                    const user = await userService.findUserByEmail(username)
 
                     if (!user) {
                         console.log('Usuario no existe');
@@ -69,7 +74,7 @@ const initializePassport = () => {
     });
 
     passport.deserializeUser(async (id, done) => {
-        const user = await UserModel.findById(id);
+        const user = await userService.findById(id);
         done(null, user);
     });
 
@@ -77,12 +82,11 @@ const initializePassport = () => {
         new GitHubStrategy({
             clientID: 'Iv1.f533d90f13aba87c',
             clientSecret: '6a23f0193bb0739140f5aaeba60da0dba007a265',
-            callbackURL: "http://localhost:8080/auth/gitHubCallBack"
+            callbackURL: `http://localhost:${serverPORT}/auth/gitHubCallBack`
         },
             async (accessToken, refreshToken, profile, done) => {
                 try {
-                    const user = await UserModel.findOne({ email: profile._json.email });
-
+                    const user = await userService.findUserByEmail( profile._json.email);
                     if (!user) {
                         const userLoginWGit = {
                             name: profile._json.name,
@@ -90,7 +94,7 @@ const initializePassport = () => {
                             pass: ''
                         };
 
-                        const newUser = await UserModel.create(userLoginWGit);
+                        const newUser = await userService.createUser(userLoginWGit);
                         return done(null, newUser);
                     }
                     done(null, user);

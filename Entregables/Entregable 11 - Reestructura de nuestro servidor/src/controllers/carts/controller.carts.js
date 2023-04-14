@@ -1,18 +1,18 @@
 import Router from 'express';
 import cartModel from '../../models/cart.models.js'
+import CartService from '../../services/carts.service.js';
+const cartService=new CartService();
 
 const router = Router();
 
 //create cart without products
 router.post('/', async(req, res) => {
-
-
     try {
-        await cartModel.create({});
-        res.json({ message: "the cart was added" })
+        const response= await cartService.createCart()
+        res.json({response})
 
     } catch (error) {
-        console.log(error)
+        res.json(error)
     }
 })
 

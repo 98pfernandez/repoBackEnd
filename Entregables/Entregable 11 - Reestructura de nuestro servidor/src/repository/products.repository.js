@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 //Variables de entorno:
 dotenv.config({ path: "../../.env" });
-let serverPORT = process.env.SERVER_PORT;
+const serverPORT = process.env.SERVER_PORT;
 
 class ProductRepository {
   //metodo para buscar en la BD para la coleccion products

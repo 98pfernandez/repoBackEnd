@@ -1,10 +1,9 @@
-import httpServer from "../index.js";
 import { Server } from 'socket.io';
 import chatModel from '../models/chat.models.js'
 
 //Servidor socket
 
-const socketServer= () => {
+const socketServer= (httpServer) => {
 
 const io = new Server(httpServer);
 

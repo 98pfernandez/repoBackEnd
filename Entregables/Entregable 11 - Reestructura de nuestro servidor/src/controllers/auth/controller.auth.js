@@ -1,16 +1,17 @@
-import  Router  from 'express';
+import Router from 'express';
 import passport from 'passport';
 
 const router = Router()
 
 router.post(
   '/',
-  passport.authenticate('login', { failureRedirect: '/auth/failLogin', failureFlash:true }),
+  passport.authenticate('login', { failureRedirect: '/auth/failLogin', failureFlash: true }),
   async (req, res) => {
     try {
       if (!req.user)
         return res.status(400).json({ error: 'Credenciales invalidas' });
 
+      //Si hay sesión le agregamos el user para identificar
       req.session.user = {
         name: req.user.name,
         email: req.user.email,
@@ -39,8 +40,6 @@ router.get('/gitHubCallBack',
 
     res.redirect('/')
   });
-
-
 
 router.get('/failLogin', (req, res) => {
   res.json({ error: req.flash('error') });

@@ -12,6 +12,7 @@ import {initializePassport}  from './config/passport.js';
 import dotenv from 'dotenv';
 import dbConnect from '../db/index.js';
 import flash from 'connect-flash';
+import socketServer from './sockets/index.js';
 
 //Variables de entorno:
 dotenv.config({path: '../../.env'})
@@ -58,9 +59,7 @@ app.use(passport.session());
 //morgan
 app.use(morgan('dev'));
 
-
 dbConnect();
-
 
 //Routes
 routes(app);
