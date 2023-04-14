@@ -7,7 +7,7 @@ dotenv.config({ path: '../../.env' })
 const dbUser = process.env.DB_USER;
 const dbPass = process.env.DB_PASS;
 const dbHost = process.env.DB_HOST;
-const dbName = process.env.DB_NAME;
+const dbName = process.env.DB_NAME_ECOMMERCE;
 
 const dbConnect = () => {
   mongoose.set('strictQuery', false);
@@ -16,9 +16,7 @@ const dbConnect = () => {
     if (error) {
       console.log('cannot connect to database')
       process.exit();
-    } else {
-      console.log("db connected")
-    }
+    } 
   })
 }
 

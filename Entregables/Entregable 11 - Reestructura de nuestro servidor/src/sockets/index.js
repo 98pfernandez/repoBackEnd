@@ -1,4 +1,10 @@
-/*import httpServer from "../index.js";
+import httpServer from "../index.js";
+import { Server } from 'socket.io';
+import chatModel from '../dao/models/chat.models.js'
+
+//Servidor socket
+
+const socketServer= () => {
 
 const io = new Server(httpServer);
 
@@ -23,4 +29,7 @@ io.on('connection', (socket) => {
         socket.emit('showMessagesLog', chatLogsDB);
     })
 }
-)*/
+)
+}
+
+export default socketServer;

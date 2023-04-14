@@ -13,19 +13,22 @@ import dotenv from 'dotenv';
 import dbConnect from '../db/index.js';
 import flash from 'connect-flash';
 
-const app = express();
-
-
-// Configurar el middleware de mensajes flash
-app.use(flash());
-
 //Variables de entorno:
 dotenv.config({path: '../../.env'})
 
 const dbUser=process.env.DB_USER;
 const dbPass=process.env.DB_PASS;
 const dbHost=process.env.DB_HOST;
-const dbName=process.env.DB_NAME;
+const dbName=process.env.DB_NAME_SESSION;
+
+
+const app = express();
+//Express
+app.use(express.json());
+
+
+// Configurar el middleware de mensajes flash
+app.use(flash());
 
 //HandleBars
 app.engine('handlebars', handlebars.engine());
@@ -57,6 +60,7 @@ app.use(morgan('dev'));
 
 
 dbConnect();
+
 
 //Routes
 routes(app);

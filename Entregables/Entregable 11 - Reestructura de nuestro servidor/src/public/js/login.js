@@ -7,7 +7,7 @@ form.addEventListener('submit', e => {
   const obj = {}
 
   data.forEach((value, key) => obj[key] = value)
-
+  
   const url = '/auth'
   const headers = {
     'Content-Type': 'application/json'

@@ -8,14 +8,16 @@ import { userController } from '../controllers/users/controller.user.js';
 import { privateAccess } from '../middlewares/index.js';
 
 const routes = (app) => {
-    app.use('/products',privateAccess, products)
+    app.use('/products', products)
     app.use('/carts',privateAccess,carts)
     app.use('/chats',privateAccess,chats)
     app.use('/realTimeProducts',privateAccess,realTimeProducts)
     app.use('/', viewsController)
     app.use('/auth', authController)
     app.use('/users', userController)
-
+    app.use('*', (req, res) => {
+        res.status(404).json({ error: 'Not Found' })
+      })
 }
 
 export default routes;
