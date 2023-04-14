@@ -1,10 +1,7 @@
 import Router from 'express';
-import CartManager from '../../dao/fileSystemManager/cartManager.js'
-import cartModel from '../../dao/models/cart.models.js'
+import cartModel from '../../models/cart.models.js'
 
 const router = Router();
-
-const carts = [];
 
 //create cart without products
 router.post('/', async(req, res) => {

@@ -1,8 +1,4 @@
 import Router from "express";
-import ProductManager from "../../dao/fileSystemManager/productManager.js";
-import productModel from "../../dao/models/products.models.js";
-import FilesDao from "../../dao/mongoManager/File.dao.js";
-import ProductsDao from "../../dao/mongoManager/Products.dao.js";
 import { privateAccess } from "../../middlewares/index.js";
 import ProductService from "../../services/products.service.js";
 
@@ -44,7 +40,7 @@ router.post("/loadLocalFile", async (req, res) => {
   const products = await fileDao.loadItems();
   const response = await productService.insertMany(products);
 
-  res.json({ message: response });
+  res.json({ response });
 });
 
 //create product
@@ -63,41 +59,24 @@ router.post("/", async (req, res) => {
 });
 
 //update product
-router.put("/:productID", async(req, res) => { 
+router.patch("/:productID", async(req, res) => { 
   const {productID} = req.params;
-  try {
-    const responseDB = await productService.getProductByID({ _id: productID });
-   //Si el producto existe podemos modificarlo
-    if (!responseDB.error) {
-        const {_id, title, description, code, price, stock, category } = req.body;
-        const product = {_id, title, description, code, price, stock, category };
-        
-        
-      } 
+  const product={};
+  const {title, description, code, price, stock, category } = req.body;
+  
+  if(title) product.title=title
+  if(description) product.description=description
+  if(code) product.code=code
+  if(price) product.price=price
+  if(stock) product.stock=stock
+  if(category) product.category=category
 
+  try{
+    const response = await productService.updateProduct({ _id:productID}, product);
+    res.json({response})
   } catch (error) {
     console.log(error);
   }
-
- /*
-  const { title, description, code, price, stock, category } = req.body;
-
-  let index = products.findIndex((product) => product.id == productID);
-
-  //only will update the fields with data.
-  if (index !== -1) {
-    title !== undefined && (products[index].title = title);
-    description !== undefined && (products[index].description = description);
-    code !== undefined && (products[index].code = code);
-    price !== undefined && (products[index].price = price);
-    stock !== undefined && (products[index].stock = stock);
-    category !== undefined && (products[index].category = category);
-
-    ProductManager.updateProduct(products[index]);
-    res.json({ message: "the product was updated" });
-  } else {
-    res.json({ message: "id not found" });
-  }*/
 });
 
 //delete product

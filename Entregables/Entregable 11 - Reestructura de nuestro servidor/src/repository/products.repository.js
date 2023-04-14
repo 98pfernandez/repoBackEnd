@@ -1,4 +1,4 @@
-import productModel from "../dao/models/products.models.js";
+import productModel from "../models/products.models.js";
 import dotenv from "dotenv";
 
 //Variables de entorno:
@@ -69,11 +69,11 @@ class ProductRepository {
     }
   }
 
-  async updateProduct(product) {
+  async updateProduct(id, product) {
     try {
-      return await productModel.updateOne
+      return await productModel.updateOne({ _id: id }, { $set: product }); 
     } catch (error) {
-      return error;
+      return { error };
     }
   }
 

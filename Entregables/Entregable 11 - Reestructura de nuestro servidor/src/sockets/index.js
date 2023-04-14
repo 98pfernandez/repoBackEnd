@@ -1,6 +1,6 @@
 import httpServer from "../index.js";
 import { Server } from 'socket.io';
-import chatModel from '../dao/models/chat.models.js'
+import chatModel from '../models/chat.models.js'
 
 //Servidor socket
 

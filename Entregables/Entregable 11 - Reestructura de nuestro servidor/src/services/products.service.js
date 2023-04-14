@@ -39,8 +39,8 @@ class ProductService {
     return productRepository.deleteAllProducts();
   }
 
-  updateProduct(){
-    return productRepository.updateProduct();
+  updateProduct(id, product) {
+    return productRepository.updateProduct(id, product);
   }
 }
 
