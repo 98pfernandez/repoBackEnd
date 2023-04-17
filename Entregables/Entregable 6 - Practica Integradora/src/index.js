@@ -7,8 +7,16 @@ import {Server}  from 'socket.io';
 import __dirname from './public/js/utils.js';
 import {arrayProducts} from './products/controller.products.js'
 import chatModel from './dao/models/chat.models.js'
-const port = 8080; 
+import dotenv from 'dotenv';
+//Variables de entorno:
+dotenv.config({ path: '../../.env' })
 
+const dbUser = process.env.DB_USER;
+const dbPass = process.env.DB_PASS;
+const dbHost = process.env.DB_HOST;
+const dbName = process.env.DB_NAME_ECOMMERCE;
+
+const port = 8080; 
 const app=express();
 
 //allow json express
@@ -26,12 +34,12 @@ app.set('views', __dirname+'/views')
 app.set('view engine','handlebars');
 
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.net/ecommerce?retryWrites=true&w=majority',(error)=>{
-    if(error){
-        console.log('cannot connect to database')
-        process.exit();
-    }
-})
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority`, (error) => {
+    if (error) {
+      console.log('cannot connect to database')
+      process.exit();
+    } 
+  })
 
 const newMessages=[];
 

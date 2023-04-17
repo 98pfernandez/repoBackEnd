@@ -1,6 +1,7 @@
 import Router from "express";
-import { privateAccess } from "../../middlewares/index.js";
-import ProductService from "../../services/products.service.js";
+import { privateAccess } from "../middlewares/index.js";
+import ProductService from "../services/products.service.js";
+import loadItems from "../utils/loadLocalFile.js";
 
 const productService = new ProductService();
 const router = Router();
@@ -22,7 +23,7 @@ router.get("/", privateAccess,async (req, res) => {
 });
 
 //get product with ID
-router.get("/:productID", privateAccess,async (req, res) => {
+router.get("/:productID" ,async (req, res) => {
   const { productID } = req.params;
 
   try {
@@ -35,9 +36,8 @@ router.get("/:productID", privateAccess,async (req, res) => {
 
 //Insert many products from a local JSON file.
 router.post("/loadLocalFile", async (req, res) => {
-  let path = process.cwd() + "/assets/Products.json";
-  const fileDao = new FilesDao(path);
-  const products = await fileDao.loadItems();
+  let path = process.cwd() + "/public/assets/Products.json";
+  const products = await loadItems(path);
   const response = await productService.insertMany(products);
 
   res.json({ response });
@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
 router.patch("/:productID", async(req, res) => { 
   const {productID} = req.params;
   const product={};
-  const {title, description, code, price, stock, category } = req.body;
+  const {title, description, code, price, stock, category,image } = req.body;
   
   if(title) product.title=title
   if(description) product.description=description
@@ -70,6 +70,7 @@ router.patch("/:productID", async(req, res) => {
   if(price) product.price=price
   if(stock) product.stock=stock
   if(category) product.category=category
+  if(image) product.image=image
 
   try{
     const response = await productService.updateProduct({ _id:productID}, product);

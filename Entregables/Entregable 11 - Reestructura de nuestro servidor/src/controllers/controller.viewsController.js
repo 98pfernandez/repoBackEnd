@@ -1,5 +1,5 @@
 import Router from 'express';
-import { publicAccess } from '../../middlewares/index.js';
+import { publicAccess } from '../middlewares/index.js';
 
 const router= Router();
 

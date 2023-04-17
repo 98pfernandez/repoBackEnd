@@ -1,5 +1,8 @@
 import { Server } from 'socket.io';
 import chatModel from '../models/chat.models.js'
+import ChatService from '../services/chats.service.js';
+
+const chatService=new ChatService();
 
 //Servidor socket
 
@@ -16,7 +19,7 @@ io.on('connection', (socket) => {
     socket.on('addMessageDB', async (message) => {
 
         try {
-            await chatModel.create(message);
+            await chatService.createMessage(message);
             io.emit('showNewMessageAllUserConnected', message);
         } catch (error) {
             alert("database error")
@@ -24,7 +27,7 @@ io.on('connection', (socket) => {
 
     })
     socket.on('getMessageLogs', async () => {
-        const chatLogsDB = await chatModel.find();
+        const chatLogsDB = await chatService.getMessageHistory();
         socket.emit('showMessagesLog', chatLogsDB);
     })
 }

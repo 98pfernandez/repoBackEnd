@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "f8b5f738-b7ea-476b-8316-8cf2fecda651",
-		"name": "Primera entrega API",
+		"_postman_id": "871afbea-c4fa-4390-980e-a481d5e5e1e5",
+		"name": "API Ecommerce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -75,7 +75,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/products/0",
+							"raw": "http://localhost:8080/products/643d8ceacbb8b7a8e8c996fc",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -83,7 +83,7 @@
 							"port": "8080",
 							"path": [
 								"products",
-								"0"
+								"643d8ceacbb8b7a8e8c996fc"
 							]
 						}
 					},
@@ -116,7 +116,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"MOUSE\",\r\n    \"description\":\"test\",\r\n    \"code\":\"124412\",\r\n    \"price\":\"1600\",\r\n    \"stock\":30,\r\n    \"category\":\"asdf\"\r\n}",
+							"raw": "{\r\n        \"title\": \"Articulo de prueba\",\r\n        \"description\": \"Description\",\r\n        \"code\": \"12345\",\r\n        \"price\": \"3000\",\r\n        \"stock\": 1,\r\n        \"category\": 1,\r\n        \"image\": \"https://apollobattery.com.au/wp-content/uploads/2022/08/default-product-image.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -140,11 +140,11 @@
 				{
 					"name": "updateProduct",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"stock\":\"1\"\r\n}",
+							"raw": "{\r\n    \"image\":\"https://pbs.twimg.com/media/Fp7hh51WIAMV7HP.jpg\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -152,7 +152,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/products/0",
+							"raw": "http://localhost:8080/products/643d916b7c65c0f23c5983c8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -160,19 +160,19 @@
 							"port": "8080",
 							"path": [
 								"products",
-								"0"
+								"643d916b7c65c0f23c5983c8"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "deleteProduct",
+					"name": "deleteProductByID",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/products/2",
+							"raw": "http://localhost:8080/products/643d8f743249f9369672a239",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -180,7 +180,7 @@
 							"port": "8080",
 							"path": [
 								"products",
-								"2"
+								"643d8f743249f9369672a239"
 							]
 						}
 					},
@@ -235,7 +235,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/carts/63fee40e2cb8d2c5119d356a",
+							"raw": "http://localhost:8080/carts/643d71a97c747590f79b0f83",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -243,25 +243,27 @@
 							"port": "8080",
 							"path": [
 								"carts",
-								"63fee40e2cb8d2c5119d356a"
+								"643d71a97c747590f79b0f83"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "createCartWithOutProducts",
+					"name": "createCart",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/carts",
+							"raw": "http://localhost:8080/carts/",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"carts"
+								"carts",
+								""
 							]
 						}
 					},
@@ -274,15 +276,10 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"arrayProducts\":[\r\n             {\r\n                \"_id\": \"63fe3cd00b89072ae8fc6ee0\",\r\n                \"title\": \"Muffin - Banana Nut Indivtitleual\",\r\n                \"description\": null,\r\n                \"code\": \"52584-153\",\r\n                \"price\": 0.03,\r\n                \"stock\": 19,\r\n                \"category\": 4057,\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"63fe3cd00b89072ae8fc7042\",\r\n                \"title\": \"Ice Cream Bar - Rolo Cone\",\r\n                \"description\": null,\r\n                \"code\": \"64117-161\",\r\n                \"price\": 0.06,\r\n                \"stock\": 52,\r\n                \"category\": 98,\r\n                \"__v\": 0\r\n            }\r\n]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\r\n    \"products\":[\r\n        {\r\n             \"_id\": \"643d916b7c65c0f23c5983c8\"\r\n         }\r\n         \r\n         ]\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/carts/63fee40e2cb8d2c5119d356a63fee40e2cb8d2c5119d356a",
+							"raw": "http://localhost:8080/carts/63fee40e2cb8d2c5119d356a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -290,7 +287,7 @@
 							"port": "8080",
 							"path": [
 								"carts",
-								"63fee40e2cb8d2c5119d356a63fee40e2cb8d2c5119d356a"
+								"63fee40e2cb8d2c5119d356a"
 							]
 						}
 					},
@@ -303,7 +300,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productID\":\"63fed5432deb47795b0dc6e5\"\r\n}",
+							"raw": "{\r\n    \"productID\":\"643d916b7c65c0f23c5983c8\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -311,7 +308,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/carts/63fee40e2cb8d2c5119d356a",
+							"raw": "http://localhost:8080/carts/643d96bcf242acf545e265b1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -319,7 +316,7 @@
 							"port": "8080",
 							"path": [
 								"carts",
-								"63fee40e2cb8d2c5119d356a"
+								"643d96bcf242acf545e265b1"
 							]
 						}
 					},
@@ -345,12 +342,12 @@
 					"response": []
 				},
 				{
-					"name": "deleteProductFromCart",
+					"name": "deleteCartById",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/carts/63fe402c08cd816efedc028f/products/63fe3cd00b89072ae8fc701a",
+							"raw": "http://localhost:8080/carts/643d91e87c65c0f23c5987c8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -358,21 +355,19 @@
 							"port": "8080",
 							"path": [
 								"carts",
-								"63fe402c08cd816efedc028f",
-								"products",
-								"63fe3cd00b89072ae8fc701a"
+								"643d91e87c65c0f23c5987c8"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "deleteAllProductsFromACart",
+					"name": "deleteProductFromCart",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/carts/63fe90bee4d3a9dc93abebd1",
+							"raw": "http://localhost:8080/carts/643d91e87c65c0f23c5987c8/products/643d916b7c65c0f23c5983c8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -380,7 +375,9 @@
 							"port": "8080",
 							"path": [
 								"carts",
-								"63fe90bee4d3a9dc93abebd1"
+								"643d91e87c65c0f23c5987c8",
+								"products",
+								"643d916b7c65c0f23c5983c8"
 							]
 						}
 					},

@@ -10,6 +10,15 @@ import chatModel from './dao/models/chat.models.js'
 import session from 'express-session';
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+//Variables de entorno:
+dotenv.config({ path: '../../.env' })
+
+const dbUser = process.env.DB_USER;
+const dbPass = process.env.DB_PASS;
+const dbHost = process.env.DB_HOST;
+const dbName = process.env.DB_NAME_ECOMMERCE;
+const dbSessions = process.env.DB_NAME_SESSION;
 
 const port = 8080;
 const app = express();
@@ -29,7 +38,7 @@ app.use(cookieParser('PABLO123'))
 app.use(session({
     // store: new fileStorage({ path: __dirname + '/sessions', ttl: 100, retries: 0 }),
         store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.net/sessions?retryWrites=true&w=majority',
+            mongoUrl:  `mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbSessions}?retryWrites=true&w=majority`,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
     }),
     secret: 'loqueQuier4',
@@ -37,12 +46,12 @@ app.use(session({
     saveUninitialized: false
   }))
 
-mongoose.connect('mongodb+srv://pasefelo:pasefelo123@cluster0.ppbw3mf.mongodb.net/ecommerce?retryWrites=true&w=majority', (error) => {
+  mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority`, (error) => {
     if (error) {
-        console.log('cannot connect to database')
-        process.exit();
-    }
-})
+      console.log('cannot connect to database')
+      process.exit();
+    } 
+  })
 
 //Routes
 routes(app);

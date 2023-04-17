@@ -1,15 +1,15 @@
-import {products} from '../controllers/products/controller.products.js';
-import {realTimeProducts} from '../controllers/products/controller.realTimeProducts.js';
-import carts from '../controllers/carts/controller.carts.js';
-import {chats} from '../controllers/chats/controller.chats.js';
-import {viewsController} from '../controllers/viewsController/controller.viewsController.js';
-import { authController } from '../controllers/auth/controller.auth.js';
-import { userController } from '../controllers/users/controller.user.js';
+import {products} from '../controllers/controller.products.js';
+import {realTimeProducts} from '../controllers/controller.realTimeProducts.js';
+import carts from '../controllers/controller.carts.js';
+import {chats} from '../controllers/controller.chats.js';
+import {viewsController} from '../controllers/controller.viewsController.js';
+import { authController } from '../controllers/controller.auth.js';
+import { userController } from '../controllers/controller.user.js';
 import { privateAccess } from '../middlewares/index.js';
 
 const routes = (app) => {
     app.use('/products', products)
-    app.use('/carts',privateAccess,carts)
+    app.use('/carts',carts)
     app.use('/chats',privateAccess,chats)
     app.use('/realTimeProducts',privateAccess,realTimeProducts)
     app.use('/', viewsController)
