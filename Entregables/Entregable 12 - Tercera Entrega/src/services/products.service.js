@@ -1,3 +1,4 @@
+import ProductDTO from "../DTOs/product.dto.js";
 import ProductRepository from "../dao/repository/products.repository.js"
 const productRepository=new ProductRepository();
 
@@ -18,16 +19,19 @@ class ProductService {
     return productRepository.findByID(id)
   }
 
-  insertMany(products){
-    return productRepository.insertMany(products)
+   insertMany(products){
+    const DTO=  new ProductDTO(products);
+    return productRepository.insertMany(DTO.products)
   }
 
   createProduct(product){
+    const productDTO=new ProductDTO(product);
+
     if (!product.title || !product.description || !product.price) {
         return ({error:'missing parameters'});
       }
 
-    return productRepository.createProduct(product)
+    return productRepository.createProduct(productDTO)
   }
 
   deleteProduct(id){
@@ -40,7 +44,8 @@ class ProductService {
   }
 
   updateProduct(id, product) {
-    return productRepository.updateProduct(id, product);
+    const productDTO=new ProductDTO(product);
+    return productRepository.updateProduct(id, productDTO);
   }
 }
 

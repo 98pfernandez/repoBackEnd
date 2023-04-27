@@ -1,3 +1,4 @@
+import CartDTO from "../DTOs/cart.dto.js";
 import CartRepository from "../dao/repository/carts.repository.js";
 const cartRepository=new CartRepository();
 
@@ -15,7 +16,8 @@ getCartById(id){
 }
 
 updateCart(cartID, cart){
-   return cartRepository.updateCart(cartID, cart);
+   const cartDTO=new CartDTO(cart);
+   return cartRepository.updateCart(cartID, cartDTO);
 }
 
 deleteAllCarts(){
