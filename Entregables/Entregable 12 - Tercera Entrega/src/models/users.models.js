@@ -8,7 +8,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  pass: String
+  pass: String,
+  cart: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'carts',
+    unique:true
+  }
 })
 
 const UserModel = mongoose.model(userCollection, userSchema)

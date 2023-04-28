@@ -4,12 +4,14 @@ import GitHubStrategy from 'passport-github2'
 import { hashPassword, validPassword } from '../utils/passwordEncryptor.js'
 import UserService from '../services/users.service.js';
 import dotenv from "dotenv";
+import CartService from '../services/carts.service.js';
 
 //Variables de entorno:
 dotenv.config({ path: "../../.env" });
 const serverPORT = process.env.SERVER_PORT;
 
 const userService=new UserService();
+const cartService=new CartService();
 const LocalStrategy = passportLocal.Strategy;
 
 const initializePassport = () => {
@@ -28,10 +30,19 @@ const initializePassport = () => {
                         return done(null, false);
                     }
 
+                    let cartId=null;
+                    try {
+                        const cart = await cartService.createCart()
+                        cartId=cart._id;
+                    } catch (error) {
+                        console.log('error creating cart');
+                    }
+
                     const newUserInfo = {
                         name,
                         email,
-                        pass: hashPassword(password)
+                        pass: hashPassword(password),
+                        cart: cartId
                     }
 
                     const newUser = await userService.createUser(newUserInfo)
@@ -57,7 +68,7 @@ const initializePassport = () => {
                         console.log('Usuario no existe');
                         return done(null, false);
                     }
-
+                    
                     if (!validPassword(user, password)) return done(null, false);
 
 
