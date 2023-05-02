@@ -2,8 +2,6 @@ import Router from "express";
 import { privateAccess } from "../middlewares/index.js";
 import ProductService from "../services/products.service.js";
 import loadItems from "../utils/loadLocalFile.js";
-import passport from 'passport'
-import {getJWTPayLoad} from '../utils/jwt.utils.js'
 
 const productService = new ProductService();
 const router = Router();
@@ -16,7 +14,7 @@ router.get("/", privateAccess, async (req, res) => {
 
   try {
     const responseDB = await productService.getProducts( query, queryData, limit, page, sort);
-    let userName = req.user.user.name
+    let userName = req.user.name;
     const products = responseDB;
 
     console.log(req)

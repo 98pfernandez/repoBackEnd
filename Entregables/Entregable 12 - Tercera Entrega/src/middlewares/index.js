@@ -12,7 +12,7 @@ function publicAccess(req, res, next) {
         return res.redirect('/login')
       }
   
-      req.user = user;
+      req.user = user.user;
       next();
     })(req, res, next);
   }

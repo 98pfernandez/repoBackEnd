@@ -2,6 +2,7 @@ import Router from 'express';
 import cartModel from '../models/cart.models.js'
 import CartService from '../services/carts.service.js';
 import ProductService from '../services/products.service.js';
+import { privateAccess } from '../middlewares/index.js';
 const cartService = new CartService();
 const productService = new ProductService();
 
@@ -37,8 +38,8 @@ router.put('/:cid', async (req, res) => {
 })
 
 //add product to cart
-router.patch('/:cartID', async (req, res) => {
-    const { cartID } = req.params
+router.patch('/', privateAccess, async (req, res) => {
+    const  cartID   = req.user.cart;
     const { productID } = req.body
 
     try {
@@ -63,10 +64,21 @@ router.patch('/:cartID', async (req, res) => {
     }
 })
 
+//obitene el carrito del user conectado 
+router.get('/', privateAccess, async (req, res) => {
+    const  cartId  = req.user.cart;
+    try {
+        const cartDB = await cartService.getCartById(cartId);
+        const cart = cartDB.products;
+        res.render('cart.handlebars', { cart })
 
+    } catch (error) {
+        res.json(error)
+    }
+})
 
 //get all carts
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
         const responseDB = await cartService.getCarts();
         res.json({ responseDB })
@@ -76,7 +88,7 @@ router.get('/', async (req, res) => {
 })
 
 //get cart by id
-router.get('/:cartId', async (req, res) => {
+router.get('/:cartId', privateAccess, async (req, res) => {
     const { cartId } = req.params;
 
     try {
