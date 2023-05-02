@@ -8,7 +8,7 @@ router.post(
   passport.authenticate('register', { failureRedirect: '/users/failRegister', failureFlash:true }),
   async (req, res) => {
     try {
-      res.json({ message: 'Usuario registrado' });
+      res.status(201).json({ message: 'Usuario registrado' });
     } catch (error) {
       console.log(error);
       if (error.code === 11000)

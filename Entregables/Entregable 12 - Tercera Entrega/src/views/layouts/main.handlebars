@@ -19,13 +19,14 @@
     <header class="d-flex justify-content-between align-items-center py-3 px-4">
         <a href="/" class="text-white fs-4">E-Commerce</a>
 
-        <div class="d-flex align-items-center">
+        <div class="flexMENU d-flex align-items-center">
             {{#if condition}}
             <a href="../login" class="btn btn-outline-light mx-2">Login</a>
             <a href="../signup" class="btn btn-outline-light mx-2">Sign Up</a>
             {{else}}
             <a href="../products" class="btn btn-outline-light mx-2">Products</a>
             <a href="../chats" class="btn btn-outline-light mx-2">Chat!</a>
+                <img id="cartIMG" src="/img/cart.png" alt="Cart">
             <a href="../auth/logout" class="btn btn-danger mx-2">Logout</a>
             {{/if}}
         </div>

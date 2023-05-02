@@ -2,6 +2,7 @@ import Router from "express";
 import { privateAccess } from "../middlewares/index.js";
 import ProductService from "../services/products.service.js";
 import loadItems from "../utils/loadLocalFile.js";
+import passport from 'passport'
 
 const productService = new ProductService();
 const router = Router();
@@ -9,12 +10,12 @@ const router = Router();
 const products = [];
 
 //get all products with query params
-router.get("/", privateAccess,async (req, res) => {
+router.get("/",async (req, res) => {
   const { limit, page, sort, query, queryData } = req.query;
 
   try {
     const responseDB = await productService.getProducts( query, queryData, limit, page, sort);
-    let userName = req.session.user.name;
+    let userName = req.user.name;
     const products = responseDB;
     res.render("products.handlebars", { products, userName });
   } catch (error) {

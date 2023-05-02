@@ -3,7 +3,7 @@
 <div id="centrate">
 <div id="productList">
     {{#each products.docs}}
-    <div class="productDiv">
+    <div id={{this._id}} class="productDiv">
         <h3>{{this.title}}</h3>
         <img class="productImage" src="{{this.image}}" alt="">
         <div>{{this.price}} US$</div>
@@ -27,3 +27,5 @@
 </div>
 
 </div>
+
+<script src="/js/addToCart.js"></script>

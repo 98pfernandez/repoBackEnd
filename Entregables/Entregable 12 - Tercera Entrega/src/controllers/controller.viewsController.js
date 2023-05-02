@@ -5,17 +5,17 @@ const router= Router();
 
 
 router.get('/', (req,res)=>{
-  let condition = !req.session.user;
+  let condition = !req.user;
 res.render('index.handlebars', {condition})
 })
 
 router.get('/login',publicAccess ,(req, res) => {
-  let condition = !req.session.user;
+  let condition = !req.user;
     res.render('login.handlebars', {condition})
   })
 
   router.get('/signup',publicAccess, (req, res) => {
-    let condition = !req.session.user;
+    let condition = !req.user;
     res.render('signup.handlebars', {condition})
   })
 

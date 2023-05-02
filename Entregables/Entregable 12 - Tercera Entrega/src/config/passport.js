@@ -1,27 +1,49 @@
 import passport from 'passport'
 import passportLocal from 'passport-local'
+import passportJwt from 'passport-jwt';
 import GitHubStrategy from 'passport-github2'
 import { hashPassword, validPassword } from '../utils/passwordEncryptor.js'
 import UserService from '../services/users.service.js';
 import dotenv from "dotenv";
 import CartService from '../services/carts.service.js';
+import cookieExtractor from '../utils/cookieExtractor.js';
 
 //Variables de entorno:
 dotenv.config({ path: "../../.env" });
 const serverPORT = process.env.SERVER_PORT;
+const jwtSECRET= process.env.JWT_SECRET;
 
 const userService=new UserService();
 const cartService=new CartService();
 const LocalStrategy = passportLocal.Strategy;
+const JWTStrategy = passportJwt.Strategy;
+const ExtractJwt = passportJwt.ExtractJwt;
 
 const initializePassport = () => {
+        passport.use(
+          'jwt',
+          new JWTStrategy(
+            {
+              jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+              secretOrKey: jwtSECRET,
+            },
+            async (jwt_payload, done) => {
+              try {
+                done(null, jwt_payload);
+              } catch (error) {
+                done(error);
+              }
+            }
+          )
+        );
+
     passport.use('register',
         new LocalStrategy(
             {
                 passReqToCallback: true, usernameField: 'email', passwordField: 'pass'
             },
             async (req, username, password, done) => {
-                const { name, email, pass } = req.body
+                const { name, email, pass } = req.body 
                 try {
                     const user = await userService.findUserByEmail( username );
 
@@ -70,7 +92,6 @@ const initializePassport = () => {
                     }
                     
                     if (!validPassword(user, password)) return done(null, false);
-
 
                     return done(null, user);
                 } catch (error) {

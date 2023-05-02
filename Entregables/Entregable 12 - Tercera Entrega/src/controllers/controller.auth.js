@@ -1,56 +1,62 @@
-import Router from 'express';
-import passport from 'passport';
+import Router from "express";
+import passport from "passport";
+import generateToken from "../utils/jwt.utils.js";
 
-const router = Router()
+const router = Router();
 
 router.post(
-  '/',
-  passport.authenticate('login', { failureRedirect: '/auth/failLogin', failureFlash: true }),
+  "/",
+  passport.authenticate("login", {
+    session:false,
+    failureRedirect: "/auth/failLogin",
+    failureFlash: true,
+  }),
   async (req, res) => {
     try {
       if (!req.user)
-        return res.status(400).json({ error: 'Credenciales invalidas' });
+        return res.status(400).json({ error: "Credenciales invalidas" });
+        console.log(req.user)
+        const userToken = req.user
 
-      //Si hay sesión le agregamos el user para identificar
-      req.session.user = {
-        name: req.user.name,
-        email: req.user.email,
-        role: req.user.email == 'adminCoder@coder.com' ? 'admin' : 'user'
-      }
-
-      res.status(201).json({ message: 'Sesión iniciada' })
+      const token = generateToken(userToken);
+      res.cookie("authToken", token, { maxAge: 60000, httpOnly: true }).status(201).json({ message: "Sesión iniciada" });
     } catch (error) {
-      console.log(error)
-      res.status(500).json({ error: 'Internal server error' })
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
     }
-  })
+  }
+);
 
-router.get('/github',
-  passport.authenticate('github', { scope: ['user:email'] }));
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
 
-router.get('/gitHubCallBack',
-  passport.authenticate('github', { failureRedirect: '/login' }),
+router.get(
+  "/gitHubCallBack",
+  passport.authenticate("github", { failureRedirect: "/login" }),
   async (req, res) => {
     // Successful authentication, redirect home.
     req.session.user = {
       name: req.user.name,
       email: req.user.email,
-      role: req.user.email == 'adminCoder@coder.com' ? 'admin' : 'user'
-    }
+      role: req.user.email == "adminCoder@coder.com" ? "admin" : "user",
+    };
 
-    res.redirect('/')
-  });
+    res.redirect("/");
+  }
+);
 
-router.get('/failLogin', (req, res) => {
-  res.json({ error: req.flash('error') });
+router.get("/failLogin", (req, res) => {
+  res.json({ error: req.flash("error") });
 });
 
-router.get('/logout', (req, res) => {
-  req.session.destroy(error => {
-    if (error) return res.json({ error })
+router.get("/logout", (req, res) => {
+  req.session.destroy((error) => {
+    if (error) return res.json({ error });
 
-    res.redirect('/login')
-  })
-})
+    res.redirect("/login");
+  });
+});
 
 export { router as authController };
