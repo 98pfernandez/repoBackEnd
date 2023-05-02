@@ -1,6 +1,6 @@
 // Obtener todos los elementos con la clase "productButton"
 const buttons = document.querySelectorAll(".productButton");
-
+/*
 const url = '/auth'
 const headers = {
   'Content-Type': 'application/json'
@@ -16,4 +16,4 @@ buttons.forEach((button) => {
     const parent = button.parentNode;
     console.log(parent.id + "El botón ha sido clickeado.");
   });
-});
+});*/

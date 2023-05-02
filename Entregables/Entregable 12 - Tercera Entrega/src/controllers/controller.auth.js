@@ -1,6 +1,6 @@
 import Router from "express";
 import passport from "passport";
-import generateToken from "../utils/jwt.utils.js";
+import {generateToken} from "../utils/jwt.utils.js";
 
 const router = Router();
 
@@ -15,11 +15,10 @@ router.post(
     try {
       if (!req.user)
         return res.status(400).json({ error: "Credenciales invalidas" });
-        console.log(req.user)
         const userToken = req.user
 
       const token = generateToken(userToken);
-      res.cookie("authToken", token, { maxAge: 60000, httpOnly: true }).status(201).json({ message: "Sesión iniciada" });
+      res.cookie("authToken", token, { maxAge: 600000, httpOnly: true }).status(201).json({ message: "Sesión iniciada" });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
@@ -52,11 +51,7 @@ router.get("/failLogin", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.session.destroy((error) => {
-    if (error) return res.json({ error });
-
-    res.redirect("/login");
-  });
+  res.clearCookie('authToken').redirect("/");
 });
 
 export { router as authController };

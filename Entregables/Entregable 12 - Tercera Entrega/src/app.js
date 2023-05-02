@@ -26,7 +26,7 @@ app.use(express.static(__dirname))
 
 
 //Session
-app.use(cookieParser('PABLO123'))
+app.use(cookieParser())
 
 //passport
 initializePassport();
