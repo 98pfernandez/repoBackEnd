@@ -55,7 +55,19 @@ router.patch('/', privateAccess, async (req, res) => {
             return res.status(404).json({ response: "product not found" });
         }
 
-        cart.products.push({ product: productID })
+        //verificamos si el producto no esta en el carrito ya
+        const productExistInCart=cart.products.find(product => {
+            return product.product._id == productID;
+          });
+          
+          if(productExistInCart){
+            productExistInCart.quantity += 1;
+          }else{
+              cart.products.push({ product: productID })
+          }
+
+          console.log(cart)
+
         const responseDB = await cartService.updateCart(cartID, cart)
 
         res.json({ responseDB })
@@ -70,6 +82,7 @@ router.get('/', privateAccess, async (req, res) => {
     try {
         const cartDB = await cartService.getCartById(cartId);
         const cart = cartDB.products;
+        console.log(cart)
         res.render('cart.handlebars', { cart })
 
     } catch (error) {
@@ -124,9 +137,11 @@ router.delete('/:cartID', async (req, res) => {
 
 })
 
-router.delete('/:cartID/products/:productID', async (req, res) => {
-    const { cartID } = req.params
+router.delete('/products/:productID', privateAccess, async (req, res) => {
+    const  cartID  = req.user.cart;
     const { productID } = req.params
+
+    console.log(cartID)
 
     try {
         const cart = await cartService.getCartById(cartID);

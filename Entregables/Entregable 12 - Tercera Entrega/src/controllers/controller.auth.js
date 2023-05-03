@@ -18,7 +18,7 @@ router.post(
         const userToken = req.user
 
       const token = generateToken(userToken);
-      res.cookie("authToken", token, { maxAge: 600000, httpOnly: true }).status(201).json({ message: "Sesión iniciada" });
+      res.cookie("authToken", token, {httpOnly: true }).status(201).json({ message: "Sesión iniciada" });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });

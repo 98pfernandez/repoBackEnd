@@ -44,8 +44,8 @@
 }
 
 .productImage {
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: 40%;
 }
 
 /*real time products*/
@@ -181,4 +181,21 @@ h1 {
 .flexMENU {
   display: flex;
   justify-content: flex-end;
+}
+
+a:hover #cartButton{
+filter: invert(100);
+}
+
+.addRemove > * {
+font-size: 2rem;
+padding: 0;
+height: 100%;
+margin-left: 1rem;
+margin-right: 1rem;
+border: 0;
+}
+
+.addRemove{
+  z-index: 1;
 }
