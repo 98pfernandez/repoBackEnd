@@ -1,29 +1,27 @@
 const buyButton = document.querySelector("#buy");
 
-const url = '/purchase'
-const headers = {
+const urlPurchase = '/purchase'
+const headersPurchase = {
   'Content-Type': 'application/json'
 }
-const method = 'POST'
-const body=null;
+const methodPurchase = 'POST'
 
 
 // Iterar sobre los botones y agregar un eventListener a cada uno
 buyButton.addEventListener("click", (event) => {
     // Aquí puedes colocar el código que se ejecutará cuando se haga clic en el botón
 
-    fetch(url, {
-      headers,
-      method,
-      body
+    fetch(urlPurchase, {
+      headers:headersPurchase,
+      method:methodPurchase
     })
     .then(response => {
       statusVar = response.status;
       return response.json()
     })
     .then(data => {
-        console.log(data)
         location.reload()
+        if(data.insufficientStock) alert('Los articulos que prevalecen en su carrito tienen un stock insuficiente.')
     })
     .catch(error => {
       alert('error')

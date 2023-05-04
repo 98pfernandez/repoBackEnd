@@ -11,7 +11,6 @@ const products = [];
 //get all products with query params
 router.get("/", privateAccess, async (req, res) => {
   const { limit, page, sort, query, queryData } = req.query;
-
   try {
     const responseDB = await productService.getProducts( query, queryData, limit, page, sort);
     let userName = req.user.name;

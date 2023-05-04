@@ -51,6 +51,7 @@ router.patch('/', privateAccess, async (req, res) => {
         //get prodcut
         const product = await productService.getProductByID(productID);
         if (product.error || product.length==0) return res.status(404).json({ response: "product not found" });
+        if(product[0].stock==0) return res.json({error: "insufficient stock" });
 
         //verificamos si el producto no esta en el carrito ya
         const productExistInCart=cart.products.find(product => {
@@ -59,6 +60,7 @@ router.patch('/', privateAccess, async (req, res) => {
 
           if(productExistInCart){
             if(productExistInCart.quantity>=product[0].stock) return res.json({error: "insufficient stock" });
+            console.log(productExistInCart.quantity>=product[0].stock)
             
             productExistInCart.quantity += 1;
           }else{
