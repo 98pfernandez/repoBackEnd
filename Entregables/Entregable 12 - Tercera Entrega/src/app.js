@@ -8,15 +8,10 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import {initializePassport}  from './config/passport.js';
 import dbConnect from '../db/index.js';
-import flash from 'connect-flash';
 
 const app = express();
 //Express
 app.use(express.json());
-
-
-// Configurar el middleware de mensajes flash
-app.use(flash());
 
 //HandleBars
 app.engine('handlebars', handlebars.engine());

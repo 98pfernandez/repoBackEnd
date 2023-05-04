@@ -16,7 +16,6 @@ router.get("/", privateAccess, async (req, res) => {
     const responseDB = await productService.getProducts( query, queryData, limit, page, sort);
     let userName = req.user.name;
     const products = responseDB;
-
     res.render("products.handlebars", { products, userName });
   } catch (error) {
     console.log(error);

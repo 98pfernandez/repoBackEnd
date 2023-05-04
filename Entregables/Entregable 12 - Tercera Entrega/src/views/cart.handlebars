@@ -9,13 +9,16 @@
         <div>stock left: {{product.stock}}</div>
         <div>QUANTITY: {{this.quantity}}</div>
         <div class="addRemove">
-        <button class="plusButton"><i style="color: green;" class="fa-solid fa-square-plus"></i></button>
-        <button class="minusButton"> <i style="color: red;" class="fa-sharp fa-solid fa-square-minus"></i></button>
+        <!--<button class="plusButton"><i style="color: green;" class="fa-solid fa-square-plus"></i></button>
+        <button class="minusButton"> <i style="color: red;" class="fa-sharp fa-solid fa-square-minus"></i></button>-->
         <button class="removeButton"><i style="color:grey" class="fa-solid fa-trash"></i></button>
         
         </div>    
             
     </div>
     {{/each}}
+    <button id="buy" style="display: block; width:50%">BUY!</button>
 
-    <script src="/js/removeFromCart.js"></script>
+
+    
+    <script src="/js/completePurchase.js"></script>

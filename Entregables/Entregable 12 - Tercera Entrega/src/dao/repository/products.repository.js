@@ -2,7 +2,7 @@ import productModel from "../../models/products.models.js";
 import dotenv from "dotenv";
 
 //Variables de entorno:
-dotenv.config({ path: "../../../.env" });
+dotenv.config({path: '../../.env'})
 const serverPORT = process.env.SERVER_PORT;
 
 class ProductRepository {

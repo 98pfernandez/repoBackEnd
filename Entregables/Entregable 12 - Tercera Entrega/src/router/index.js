@@ -6,6 +6,7 @@ import {viewsController} from '../controllers/controller.viewsController.js';
 import { authController } from '../controllers/controller.auth.js';
 import { userController } from '../controllers/controller.user.js';
 import { privateAccess } from '../middlewares/index.js';
+import {purchaseController} from '../controllers/controller.purchase.js';
 
 const routes = (app) => {
     app.use('/products', products)
@@ -15,6 +16,7 @@ const routes = (app) => {
     app.use('/', viewsController)
     app.use('/auth', authController)
     app.use('/users', userController)
+    app.use('/purchase', purchaseController)
     app.use('*', (req, res) => {
         res.status(404).json({ error: 'Not Found' })
       })

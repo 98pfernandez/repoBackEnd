@@ -68,7 +68,6 @@ const initializePassport = () => {
                     }
 
                     const newUser = await userService.createUser(newUserInfo)
-
                     return done(null, newUser);
                 } catch (error) {
                     return done(error);

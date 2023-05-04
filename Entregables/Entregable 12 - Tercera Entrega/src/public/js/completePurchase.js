@@ -1,21 +1,16 @@
-// Obtener todos los elementos con la clase "productButton"
-const buttons = document.querySelectorAll(".productButton");
+const buyButton = document.querySelector("#buy");
 
-
-const url = '/carts'
+const url = '/purchase'
 const headers = {
   'Content-Type': 'application/json'
 }
-const method = 'PATCH'
+const method = 'POST'
+const body=null;
 
 
 // Iterar sobre los botones y agregar un eventListener a cada uno
-buttons.forEach((button) => {
-  button.addEventListener("click", (event) => {
+buyButton.addEventListener("click", (event) => {
     // Aquí puedes colocar el código que se ejecutará cuando se haga clic en el botón
-    const parent = button.parentNode;
-    const data = { productID: parent.id};
-    const body = JSON.stringify(data)
 
     fetch(url, {
       headers,
@@ -27,11 +22,11 @@ buttons.forEach((button) => {
       return response.json()
     })
     .then(data => {
-      console.log(data)
+        console.log(data)
+        location.reload()
     })
     .catch(error => {
       alert('error')
       console.log(error)
     })
   })
-  });

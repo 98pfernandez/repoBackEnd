@@ -1,14 +1,17 @@
 import  Router  from 'express';
 import passport from 'passport';
+import { generateToken } from '../utils/jwt.utils.js';
 
 const router = Router()
 
 router.post(
   '/',
-  passport.authenticate('register', { failureRedirect: '/users/failRegister', failureFlash:true }),
+  passport.authenticate('register', {session:false, failureRedirect: '/users/failRegister', failureFlash:true  }),
   async (req, res) => {
     try {
-      res.status(201).json({ message: 'Usuario registrado' });
+      const userToken = req.user;
+      const token = generateToken(userToken);
+      res.cookie("authToken", token, { httpOnly: true }).status(201).json({ message: "Sesión iniciada" });
     } catch (error) {
       console.log(error);
       if (error.code === 11000)
@@ -18,7 +21,7 @@ router.post(
   })
 
 router.get('/failRegister', async (req, res) => {
-  res.json({ error: req.flash('error') });
+  res.json({ error: "login error"});
 });
 
 

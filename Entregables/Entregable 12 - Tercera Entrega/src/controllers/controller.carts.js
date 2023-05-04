@@ -45,28 +45,25 @@ router.patch('/', privateAccess, async (req, res) => {
     try {
         //get cart
         const cart = await cartService.getCartById(cartID)
-        if (cart.error || cart.length==0) {
-            return res.status(404).json({ response: "cart not found" });
-        }
+        if (cart.error || cart.length==0) return res.status(404).json({ response: "cart not found" });
+        
 
         //get prodcut
         const product = await productService.getProductByID(productID);
-        if (product.error || product.length==0) {
-            return res.status(404).json({ response: "product not found" });
-        }
+        if (product.error || product.length==0) return res.status(404).json({ response: "product not found" });
 
         //verificamos si el producto no esta en el carrito ya
         const productExistInCart=cart.products.find(product => {
             return product.product._id == productID;
           });
-          
+
           if(productExistInCart){
+            if(productExistInCart.quantity>=product[0].stock) return res.json({error: "insufficient stock" });
+            
             productExistInCart.quantity += 1;
           }else{
               cart.products.push({ product: productID })
           }
-
-          console.log(cart)
 
         const responseDB = await cartService.updateCart(cartID, cart)
 
@@ -82,7 +79,6 @@ router.get('/', privateAccess, async (req, res) => {
     try {
         const cartDB = await cartService.getCartById(cartId);
         const cart = cartDB.products;
-        console.log(cart)
         res.render('cart.handlebars', { cart })
 
     } catch (error) {

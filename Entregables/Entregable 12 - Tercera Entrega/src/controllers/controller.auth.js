@@ -1,13 +1,13 @@
 import Router from "express";
 import passport from "passport";
-import {generateToken} from "../utils/jwt.utils.js";
+import { generateToken } from "../utils/jwt.utils.js";
 
 const router = Router();
 
 router.post(
   "/",
   passport.authenticate("login", {
-    session:false,
+    session: false,
     failureRedirect: "/auth/failLogin",
     failureFlash: true,
   }),
@@ -15,10 +15,10 @@ router.post(
     try {
       if (!req.user)
         return res.status(400).json({ error: "Credenciales invalidas" });
-        const userToken = req.user
 
+      const userToken = req.user
       const token = generateToken(userToken);
-      res.cookie("authToken", token, {httpOnly: true }).status(201).json({ message: "Sesión iniciada" });
+      res.cookie("authToken", token, { httpOnly: true }).status(201).json({ message: "Sesión iniciada" });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
@@ -33,7 +33,7 @@ router.get(
 
 router.get(
   "/gitHubCallBack",
-  passport.authenticate("github", { failureRedirect: "/login" }),
+  passport.authenticate("github", { failureRedirect: "/login", session: false }),
   async (req, res) => {
     // Successful authentication, redirect home.
     req.session.user = {
@@ -47,7 +47,7 @@ router.get(
 );
 
 router.get("/failLogin", (req, res) => {
-  res.json({ error: req.flash("error") });
+  res.json({ error: "login error" });
 });
 
 router.get("/logout", (req, res) => {
