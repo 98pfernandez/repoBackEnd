@@ -1,0 +1,49 @@
+fatal: nivel fatal desde el test de logs
+info: GET en /loggertest/debug - 17:47:40
+debug: nivel debug desde el test de logs
+info: GET en /loggertest/debug - 17:47:42
+debug: nivel debug desde el test de logs
+info: GET en /loggertest/error - 17:47:49
+info: GET en /loggertest/error - 17:48:09
+info: GET en /loggertest/error - 17:48:11
+info: GET en /loggertest/error - 17:48:38
+info: GET en /loggertest/error - 17:48:41
+info: GET en /loggertest/warning - 17:48:46
+warning: nivel warning desde el test de logs
+info: GET en /loggertest/fatal - 17:48:55
+fatal: nivel fatal desde el test de logs
+info: GET en /loggertest/error - 17:49:00
+info: GET en /loggertest/error - 17:49:01
+info: GET en /loggertest/error - 17:49:25
+error: nivel error desde el test de logs
+info: GET en /loggertest/error - 17:49:27
+error: nivel error desde el test de logs
+info: GET en /loggertest/error - 17:50:16
+info: GET en /loggertest/error - 17:50:16
+info: GET en /loggertest/error - 17:50:17
+info: GET en /loggertest/warning - 17:50:24
+warning: nivel warning desde el test de logs
+info: GET en /loggertest/debug - 17:50:40
+debug: nivel debug desde el test de logs
+info: GET en /loggertest/debug - 17:51:05
+debug: nivel debug desde el test de logs
+info: GET en /loggertest/debug - 17:51:18
+debug: nivel debug desde el test de logs
+info: GET en /loggertest/fatal - 17:51:21
+fatal: nivel fatal desde el test de logs
+info: GET en /loggertest/error - 17:51:24
+error: nivel error desde el test de logs
+info: GET en /loggertest/warning - 17:51:27
+warning: nivel warning desde el test de logs
+info: GET en /loggertest/error - 17:51:27
+error: nivel error desde el test de logs
+info: GET en /loggertest/info - 17:51:30
+info: nivel info desde el test de logs
+info: GET en /loggertest/http - 17:51:34
+http: nivel http desde el test de logs
+info: GET en /loggertest/debug - 17:51:37
+debug: nivel debug desde el test de logs
+info: GET en /loggertest/debug - 17:51:37
+debug: nivel debug desde el test de logs
+info: GET en /loggertest/debug - 17:53:01
+debug: nivel debug desde el test de logs
