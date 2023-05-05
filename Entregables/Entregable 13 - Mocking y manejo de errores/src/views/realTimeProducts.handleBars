@@ -1,0 +1,25 @@
+<div>
+    <h1>Real time products!</h1>
+
+    <div class="realTimeProducts">
+
+        <div class="Product">
+            <div style="background-color: grey;" class="title">TITLE</div>
+            <div style="background-color: grey;" class="description">DESCRIPTION</div>
+            <div style="background-color: grey;" class="price">PRICE</div>
+        </div>
+    {{#each arrayProducts}}
+    <div class="Product">
+    <div class="productName">{{this.title}}</div>
+    <div class="productDescription">{{this.description}}</div>
+    <div class="productPrice">{{this.price}}</div>
+    </div>
+
+    {{/each}}
+    </div>
+
+<button id="bttRefresh">UPDATE!</button>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTimeProducts.js"></script>

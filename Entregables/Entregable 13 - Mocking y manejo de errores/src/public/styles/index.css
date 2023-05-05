@@ -1,0 +1,23 @@
+.centerCarousel{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1%;
+    height: 100%;
+}
+
+#carouselExampleIndicators {
+    width: 80%;
+  }
+
+.carousel-item{
+    max-width: 100%;
+    height: 80vh;
+}
+  
+  img{
+    max-width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+  
