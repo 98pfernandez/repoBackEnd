@@ -11,8 +11,6 @@ function errorHandler(error, req, res, next){
     default:
       res.json({ error: 'Unhandled error' })
   }
-
-  next()
 }
 
-export default errorHandler
+export {errorHandler}

@@ -9,7 +9,7 @@ const router = Router();
 const products = [];
 
 //get all products with query params
-router.get("/",  async (req, res) => {
+router.get("/", privateAccess, async (req, res) => {
   const { limit, page, sort, query, queryData } = req.query;
   try {
     const responseDB = await productService.getProducts( query, queryData, limit, page, sort);

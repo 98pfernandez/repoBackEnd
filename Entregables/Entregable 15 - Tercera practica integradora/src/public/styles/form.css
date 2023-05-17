@@ -1,0 +1,52 @@
+#formLogin, #formSignup{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+    border: 1px solid black;
+    color: black;
+    font-size: large;
+    height: 20rem;
+    margin-top: 10%;
+}
+
+
+label, button, input{
+    color: black;
+}
+
+#centerForm{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#logWGitHub{
+    color:black !important;
+    margin-bottom: 2%;
+    width: 20%;
+    margin-right: 10%;
+}
+
+#recoverPass{
+    color:black !important;
+    margin-bottom: 2%;
+    width: 20%;
+    margin-right: 10%;
+}
+
+#logWGitHub:hover{
+    color:blue !important;
+    text-decoration: underline !important;
+}
+
+#recoverPass:hover{
+    color:blue !important;
+    text-decoration: underline !important;
+}
+
+.alternativeLoginAndRecoverPass{
+    display: flex;
+    flex-direction: row;
+    
+  }

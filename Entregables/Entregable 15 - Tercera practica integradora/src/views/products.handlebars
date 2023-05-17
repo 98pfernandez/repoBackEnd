@@ -1,0 +1,31 @@
+<h1>{{userName}} welcome to the product list!</h1>
+
+<div id="centrate">
+<div id="productList">
+    {{#each products.docs}}
+    <div id={{this._id}} class="productDiv">
+        <h3>{{this.title}}</h3>
+        <img class="productImage" src="{{this.image}}" alt="">
+        <div>{{this.price}} US$</div>
+        <div>stock left: {{this.stock}}</div>
+        <button class="productButton">Add to cart</button>
+    </div>
+    {{/each}}
+
+    <div id="buttons">
+        <button class="prevPage" onclick = "window.location.href='{{products.prevLink}}';">
+            < 
+        </button>
+        
+        <div id="numPage">{{products.page}}</div>
+
+        <button class="nextPage" onclick = "window.location.href='{{products.nextLink}}';">
+            >
+        </button>
+
+    </div>
+</div>
+
+</div>
+
+<script src="/js/addToCart.js"></script>

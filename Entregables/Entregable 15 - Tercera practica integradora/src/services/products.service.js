@@ -7,14 +7,13 @@ const productRepository=new ProductRepository();
 
 
 class ProductService {
- getProducts(query=null,queryData=null, limit=10,page=1,sort=null) {
-    
-  //Seteamos la paginación 
-   /* limit = limit || 10;
+ getProducts(query,queryData, limit,page,sort) {
+    //Seteamos la paginación 
+    limit = limit || 10;
     page =  page || 1;
     sort =  sort || null;
     query =  query || null;
-    queryData =queryData || null;*/
+    queryData =queryData || null;
 
 
     return productRepository.find(query,queryData, limit,page,sort)
@@ -32,15 +31,7 @@ class ProductService {
   createProduct(product){
     const productDTO=new ProductDTO(product);
 
-    if (!product.title || !product.description || !product.price) {
-      CustomError.createError({
-        name: 'product creation error',
-        cause: generateProductErrorInfo({ "title":product.title, "description":product.description, "price":product.price }),
-        message: 'Error trying to create a product',
-        code: EnumError.INVALID_TYPES_ERROR,
-      })
-
-      }
+    if (!product.title || !product.description || !product.price) return ({error:'missing parameters'});
 
     return productRepository.createProduct(productDTO)
   }

@@ -1,4 +1,4 @@
-const generateProductErrorInfo = (product) => {
+const generateProductErrorInfo = product => {
   return `
     One or more properties were incomplete or not valid.
     List of required properties:

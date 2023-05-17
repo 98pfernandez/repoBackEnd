@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <header class="d-flex justify-content-between align-items-center py-3 px-4">
+        <a href="/" class="text-white fs-4">E-Commerce</a>
+
+        <div class="flexMENU d-flex align-items-center">
+            {{#if condition}}
+            <a href="../login" class="btn btn-outline-light mx-2">Login</a>
+            <a href="../signup" class="btn btn-outline-light mx-2">Sign Up</a>
+            {{else}}
+            <a href="../products" class="btn btn-outline-light mx-2">Products</a>
+            <a href="../chats" class="btn btn-outline-light mx-2">Chat!</a>
+            <a id="cartButtonA"  href="../carts" class="btn btn-outline-light mx-2"><i style="font-size: 1.8rem;" id="cartButton" class="fa-solid fa-cart-shopping "></i></a>
+            <a href="../auth/logout" class="btn btn-danger mx-2">Logout</a>
+            {{/if}}
+        </div>
+    </header>
+
+
+
+    <main>
+        {{{body}}}
+    </main>
+
+    <footer class="bg-light text-center py-3">
+        <p>© 2023 E-Commerce. All Rights Reserved.</p>
+    </footer>
+        <script src="https://kit.fontawesome.com/7215c0eeea.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -8,9 +8,13 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import {initializePassport}  from './config/passport.js';
 import dbConnect from '../db/index.js';
-import  errorHandler  from './middlewares/handler.errors.js';
+import { errorHandler } from './middlewares/handler.errors.js';
+import { addLogger } from './middlewares/logger.js';
 
 const app = express();
+//Logger
+app.use(addLogger)
+
 //Express
 app.use(express.json());
 
@@ -28,9 +32,6 @@ app.use(cookieParser())
 //passport
 initializePassport();
 app.use(passport.initialize());
-
-//morgan
-app.use(morgan('dev'));
 
 dbConnect();
 
