@@ -2,8 +2,15 @@ import Router from "express";
 import passport from "passport";
 import { generateToken } from "../utils/jwt.utils.js";
 import UserService from "../services/users.service.js";
+import  {transport}  from "../config/email.config.js";
 const router = Router();
 const userService=new UserService();
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+
+//Variables de entorno:
+dotenv.config({ path: "../../.env" });
+
 
 router.post(
   "/",
@@ -63,9 +70,26 @@ router.post("/sendMailRestore", async (req, res) => {
   const {email} = req.body;
   try {
     const user = await userService.findUserByEmail( email );
-    res.json({ user });
+    if (!user) res.json({user});
+
+    const mail=process.env.MAILER_SERVICE;
+    const claveSecreta = process.env.JWT_SECRET;
+    const tiempoExpiracion = '1h'; // Cambia esto según tus necesidades
+    const token = jwt.sign({}, claveSecreta, { expiresIn: tiempoExpiracion });
+    const enlace = `https://localhost:8080?token=${token}`;
+
+    const result = await transport.sendMail({
+      from: mail,
+      to: user.email,
+      subject: 'restore password',
+      html:'<h1>'+enlace+'</h1>',
+      attachments:[]
+    })
+
+    res.json({ result });
   } catch (error) {
     
+  
   }
 });
 

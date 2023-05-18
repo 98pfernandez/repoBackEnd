@@ -23,6 +23,10 @@ buttonRecover.addEventListener('click', e => {
     })
     .then(response => {
     alert("recovery email was sent")
+    return response.json()
+    })
+    .then(data => {
+      console.log(data)
     })
   .catch(error => {
     alert('error')
