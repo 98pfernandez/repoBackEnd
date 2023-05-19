@@ -63,7 +63,30 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/restorePass", (req, res) => {
-  res.render('restorePass.handlebars')
+  const {token} =req.query;
+  let validToken=false;
+  const claveSecreta = process.env.JWT_SECRET;
+
+  if(token){
+    try{
+    const decoded = jwt.verify(token, claveSecreta);
+    validToken=true;
+    const fechaActualEnSegundos = Math.floor(Date.now() / 1000);
+    const fechaExpiracionToken = decoded.exp;
+    const diferenciaTiempoMiliSegundos =  (fechaExpiracionToken- fechaActualEnSegundos)*1000;
+
+    res.cookie("passRestoreToekn", token, {maxAge: diferenciaTiempoMiliSegundos, httpOnly: true });
+  } catch (error) {
+    console.error('Error al desencriptar el JWT:', error);
+    validToken=false
+  }
+
+  }else{
+    validToken=false
+  }
+  //No hay que mostrar los iconos de productos, cart etc..
+  const condition=true;
+  res.render('restorePass.handlebars', {condition,validToken})
 });
 
 router.post("/sendMailRestore", async (req, res) => {
@@ -74,9 +97,11 @@ router.post("/sendMailRestore", async (req, res) => {
 
     const mail=process.env.MAILER_SERVICE;
     const claveSecreta = process.env.JWT_SECRET;
+    const port = process.env.SERVER_PORT;
+    console.log(user.email);
     const tiempoExpiracion = '1h'; // Cambia esto según tus necesidades
-    const token = jwt.sign({}, claveSecreta, { expiresIn: tiempoExpiracion });
-    const enlace = `https://localhost:8080?token=${token}`;
+    const token = jwt.sign({email:user.email}, claveSecreta, { expiresIn: tiempoExpiracion });
+    const enlace = `localhost:${port}/auth/restorePass?token=${token}`;
 
     const result = await transport.sendMail({
       from: mail,
