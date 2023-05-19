@@ -24,6 +24,14 @@ class UserRepository {
             return { error };
         }
     }
+
+    async updateUser(email, user) {
+        try {
+          return await UserModel.updateOne( {email: email} , {user} ); 
+        } catch (error) {
+          return { error };
+        }
+      }
 }
 
 export default UserRepository;

@@ -13,6 +13,10 @@ findById(id){
 createUser(userInfo){
     return userRepository.createUser(userInfo);
 }
+
+updateUser(email, user) {
+    return userRepository.updateUser(email, user);
+  }
 }
 
 export default UserService

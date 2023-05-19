@@ -1,33 +1,34 @@
 const buttonRecover = document.getElementById('restorePass')
 
+//Recovery mail
 buttonRecover.addEventListener('click', e => {
-    const recoverEmail= document.getElementById('recoverEmail')
-    const email=recoverEmail.value;
-    if(!email) return alert("the email cant be empty!");   
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const recoverEmail= document.getElementById('recoverEmail')
+  const email=recoverEmail.value;
+  if(!email) return alert("the email cant be empty!");   
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if(!emailRegex.test(email)) return alert("email not valid")
-
+    
     //fetch
     const url = '/auth/sendMailRestore'
-     const headers = {
+    const headers = {
     'Content-Type': 'application/json'
-    }
-    const method = 'POST'
-    const body = JSON.stringify({email})
-
-    fetch(url, {
+  }
+  const method = 'POST'
+  const body = JSON.stringify({email})
+  
+  fetch(url, {
     headers,
     method,
     body
-    })
-    .then(response => {
+  })
+  .then(response => {
     alert("recovery email was sent")
     return response.json()
-    })
-    .then(data => {
-      console.log(data)
-    })
+  })
+  .then(data => {
+    console.log(data)
+  })
   .catch(error => {
     alert('error')
     console.log(error)

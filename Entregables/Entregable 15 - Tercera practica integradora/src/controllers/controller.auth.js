@@ -71,11 +71,6 @@ router.get("/restorePass", (req, res) => {
     try{
     const decoded = jwt.verify(token, claveSecreta);
     validToken=true;
-    const fechaActualEnSegundos = Math.floor(Date.now() / 1000);
-    const fechaExpiracionToken = decoded.exp;
-    const diferenciaTiempoMiliSegundos =  (fechaExpiracionToken- fechaActualEnSegundos)*1000;
-
-    res.cookie("passRestoreToekn", token, {maxAge: diferenciaTiempoMiliSegundos, httpOnly: true });
   } catch (error) {
     console.error('Error al desencriptar el JWT:', error);
     validToken=false
@@ -99,7 +94,7 @@ router.post("/sendMailRestore", async (req, res) => {
     const claveSecreta = process.env.JWT_SECRET;
     const port = process.env.SERVER_PORT;
     console.log(user.email);
-    const tiempoExpiracion = '1h'; // Cambia esto según tus necesidades
+    const tiempoExpiracion = '1h';
     const token = jwt.sign({email:user.email}, claveSecreta, { expiresIn: tiempoExpiracion });
     const enlace = `localhost:${port}/auth/restorePass?token=${token}`;
 
@@ -115,6 +110,21 @@ router.post("/sendMailRestore", async (req, res) => {
   } catch (error) {
     
   
+  }
+});
+
+router.patch("/restorePass", async (req, res) => {
+  try {
+    
+  const {token, pass} = req.body;
+  const claveSecreta = process.env.JWT_SECRET;
+  const decoded = jwt.verify(token, claveSecreta);
+  const email=decoded.email;
+  const result=await userService.updateUser(email, pass)
+
+  console.log(result)
+  } catch (error) {
+    console.log(error);
   }
 });
 
