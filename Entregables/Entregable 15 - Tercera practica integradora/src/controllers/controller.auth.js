@@ -7,6 +7,7 @@ const router = Router();
 const userService=new UserService();
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import { hashPassword } from "../utils/passwordEncryptor.js";
 
 //Variables de entorno:
 dotenv.config({ path: "../../.env" });
@@ -72,7 +73,7 @@ router.get("/restorePass", (req, res) => {
     const decoded = jwt.verify(token, claveSecreta);
     validToken=true;
   } catch (error) {
-    console.error('Error al desencriptar el JWT:', error);
+    req.logger.info(error);
     validToken=false
   }
 
@@ -93,23 +94,25 @@ router.post("/sendMailRestore", async (req, res) => {
     const mail=process.env.MAILER_SERVICE;
     const claveSecreta = process.env.JWT_SECRET;
     const port = process.env.SERVER_PORT;
-    console.log(user.email);
-    const tiempoExpiracion = '1h';
+    const tiempoExpiracion = '5m';
     const token = jwt.sign({email:user.email}, claveSecreta, { expiresIn: tiempoExpiracion });
-    const enlace = `localhost:${port}/auth/restorePass?token=${token}`;
+    const enlace = `http://localhost:${port}/auth/restorePass?token=${token}`;
 
     const result = await transport.sendMail({
       from: mail,
       to: user.email,
       subject: 'restore password',
-      html:'<h1>'+enlace+'</h1>',
+      html:`
+      <p>Hello,</p>
+      <p>You have requested to reset your password. Please click on the following link to proceed:</p>
+      <p><a href="${enlace}">Reset Password</a></p>
+      <p>If you did not request to reset your password, you can ignore this email.</p>`, 
       attachments:[]
     })
 
     res.json({ result });
   } catch (error) {
-    
-  
+    req.logger.info(error)
   }
 });
 
@@ -120,9 +123,13 @@ router.patch("/restorePass", async (req, res) => {
   const claveSecreta = process.env.JWT_SECRET;
   const decoded = jwt.verify(token, claveSecreta);
   const email=decoded.email;
-  const result=await userService.updateUser(email, pass)
+  console.log(email)
 
-  console.log(result)
+  const userInfo={
+    pass:hashPassword(pass)
+  }
+  const result=await userService.updateUser(email, userInfo);
+  res.json({ result });
   } catch (error) {
     console.log(error);
   }

@@ -27,7 +27,7 @@ class UserRepository {
 
     async updateUser(email, user) {
         try {
-          return await UserModel.updateOne( {email: email} , {user} ); 
+          return await UserModel.updateOne({ email }, { $set: user }); 
         } catch (error) {
           return { error };
         }

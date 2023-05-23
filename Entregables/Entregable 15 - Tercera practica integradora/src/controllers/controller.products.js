@@ -2,6 +2,8 @@ import Router from "express";
 import { privateAccess } from "../middlewares/index.js";
 import ProductService from "../services/products.service.js";
 import loadItems from "../utils/loadLocalFile.js";
+import UserService from "../services/users.service.js";
+const userService=new UserService();
 
 const productService = new ProductService();
 const router = Router();
@@ -13,12 +15,21 @@ router.get("/", privateAccess, async (req, res) => {
   const { limit, page, sort, query, queryData } = req.query;
   try {
     const responseDB = await productService.getProducts( query, queryData, limit, page, sort);
-    let userName = req.user.name;
+    const responseDBUser=await userService.findUserByEmail(req.user.email);
+
+    let userInfo = {
+      name:req.user.name,
+      rol: responseDBUser.rol=='premium'};
     const products = responseDB;
-    res.render("products.handlebars", { products, userName });
+    res.render("products.handlebars", { products, userInfo });
   } catch (error) {
     console.log(error);
   }
+});
+
+router.get("/addProduct", privateAccess,(req, res) => {
+  let userMail=req.user.email
+  res.render("addProduct.handlebars", {userMail} );
 });
 
 //get product with ID
@@ -45,10 +56,13 @@ router.post("/loadLocalFile", async (req, res) => {
 //create product
 router.post("/", async (req, res) => {
   try {
-    const { title, description, code, price, stock, category } = req.body;
+    let { title, description, code, price, stock, category, image, owner } = req.body;
+    if(!image) image= "";
+    if(!owner) owner= "admin";
 
     //Create json
-    const product = { title, description, code, price, stock, category };
+    const product = { title, description, code, price, stock, category, image, owner };
+    console.log(product)
     const response= await productService.createProduct(product)
 
     res.json({ response });

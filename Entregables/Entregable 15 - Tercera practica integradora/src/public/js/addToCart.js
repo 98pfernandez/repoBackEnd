@@ -27,6 +27,8 @@ buttons.forEach((button) => {
       return response.json()
     })
     .then(data => {
+      if(data.insufficientStock) return Swal.fire( 'Warning','Insufficient stock','warning');
+      if(data.ownProduct)  return Swal.fire( 'Warning','you cannot add your own products','warning');
       console.log(data)
     })
     .catch(error => {

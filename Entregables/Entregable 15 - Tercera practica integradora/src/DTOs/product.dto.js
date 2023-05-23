@@ -8,7 +8,8 @@ class ProductDTO {
         price: product.price,
         stock: product.stock,
         category: product.category,
-        image: product.image
+        image: product.image,
+        owner: product.owner
       }));    
     }else{
       this.title=products.title
@@ -18,6 +19,7 @@ class ProductDTO {
       this.stock=products.stock
       this.category=products.category
       this.image=products.image
+      this.owner=products.owner
     }
     }
 }

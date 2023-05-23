@@ -29,8 +29,10 @@ form.addEventListener('submit', e => {
       console.log(data)
       //Si el usuario esta correcto entramos al sistema
       if (statusVar == 201) {
-        document.location.href = '/'
+        return document.location.href = '/'
       }
+      //Incorrrecto
+      Swal.fire("Error", "invalid user or password", "error")
     })
     .catch(error => console.log(error))
 

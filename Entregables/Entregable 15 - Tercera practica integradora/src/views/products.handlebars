@@ -1,4 +1,8 @@
-<h1>{{userName}} welcome to the product list!</h1>
+<h1>{{userInfo.name}} welcome to the product list!</h1>
+
+{{#if userInfo.rol}}
+<a id="addProduct" href='/products/addProduct'>Add product</a>
+{{/if}}
 
 <div id="centrate">
 <div id="productList">

@@ -20,7 +20,10 @@ inputName.addEventListener('keypress', (e)=> {
 
             socket.emit('getMessageLogs')
         }else{
-            alert("insert name!")
+            return Swal.fire(
+                'Warning',
+                'Insert name!',
+                'warning') 
         }
     }
 });

@@ -1,8 +1,11 @@
 import  Router  from 'express';
 import passport from 'passport';
 import { generateToken } from '../utils/jwt.utils.js';
-
-const router = Router()
+import { privateAccess } from '../middlewares/index.js';
+import UserService from "../services/users.service.js";
+import  {transport}  from "../config/email.config.js";
+const userService=new UserService();
+const router = Router();
 
 router.post(
   '/',
@@ -24,5 +27,21 @@ router.get('/failRegister', async (req, res) => {
   res.json({ error: "login error"});
 });
 
+router.get('/premium/:userEmail' , privateAccess, async (req, res) => {
+  const {userEmail} = req.params;
+
+    const responseDBCreate=await userService.findUserByEmail(userEmail)
+    if (!responseDBCreate) return res.status(400).json({error:true, info:'user not found'});
+      
+    const userInfo={
+      rol: responseDBCreate.rol =='premium'? 'user' : 'premium'
+    }
+
+    const responseDBUpdate=await userService.updateUser(userEmail, userInfo);
+    if (responseDBUpdate.modifiedCount==0) return res.status(400).json({error:true, info:'update error'});
+
+    
+    res.json({info:`the role of user ${userEmail} was changed from ${responseDBCreate.rol} to ${userInfo.rol}`});
+});
 
 export { router as userController };

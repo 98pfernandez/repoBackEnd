@@ -14,7 +14,11 @@ const productSchema=new mongoose.Schema({
     price:Number,
     stock: Number,
     category: Number,
-    image: String
+    image: String,
+    owner:{
+        type:String,
+        default:'admin'
+    }
 })
 
 productSchema.plugin(mongoosePaginate)

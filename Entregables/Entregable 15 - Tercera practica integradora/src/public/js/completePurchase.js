@@ -21,7 +21,10 @@ buyButton.addEventListener("click", (event) => {
     })
     .then(data => {
         location.reload()
-        if(data.insufficientStock) alert('Los articulos que prevalecen en su carrito tienen un stock insuficiente.')
+        if(data.insufficientStock) return Swal.fire(
+          'Atención',
+          'Los articulos que prevalecen en su carrito tienen un stock insuficiente.',
+          'warning') 
     })
     .catch(error => {
       alert('error')
