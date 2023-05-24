@@ -41,7 +41,7 @@ router.get('/premium/:userEmail' , privateAccess, async (req, res) => {
     if (responseDBUpdate.modifiedCount==0) return res.status(400).json({error:true, info:'update error'});
 
     
-    res.json({info:`the role of user ${userEmail} was changed from ${responseDBCreate.rol} to ${userInfo.rol}`});
+    res.status(200).json({info:`the role of user ${userEmail} was changed from ${responseDBCreate.rol} to ${userInfo.rol}`});
 });
 
 export { router as userController };
