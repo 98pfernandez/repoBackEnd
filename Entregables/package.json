@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node './Entregable 11 - Reestructura de nuestro servidor/src/index.js'",
+    "test": "mocha \"./Entregable 17 - Módulos de testing para el Proyecto Final/test/supertest.test.js\"",
+    "start": "node \"./Entregable 11 - Reestructura de nuestro servidor/src/index.js\"",
     "start:dev": "nodemon \"./Entregable 11 - Reestructura de nuestro servidor/src/index.js\""
   },
   "keywords": [],
@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "chai": "^4.3.7",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
@@ -37,6 +38,7 @@
     "readline-sync": "^1.4.10",
     "router": "^1.3.8",
     "socket.io": "^4.6.1",
+    "supertest": "^6.3.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3",
     "sweetalert2": "^11.7.5",
