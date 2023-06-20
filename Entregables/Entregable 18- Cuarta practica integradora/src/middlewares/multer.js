@@ -1,18 +1,16 @@
+import { __dirnameROOT } from '../public/utils.js'
 import multer from 'multer'
 
-const storage = multer. diskStorage({
+const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null,'uploads')
-        },
-        filename: function (req, file, cb) {
+        cb(null, `${__dirnameROOT}/uploads`)
+    },
+    filename: function (req, file, cb) {
         cb(null, `${Date.now()}-${file.originalname}`)
-         }
+    }
+
 })
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-function uploadFile(req,res){
-    res.send({data:'archivo enviado'})
-}
-
-export {upload,uploadFile}
+export { upload }

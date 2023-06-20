@@ -18,19 +18,6 @@ const productSchema=new mongoose.Schema({
     owner:{
         type:String,
         default:'admin'
-    },
-    document:{
-        type: [
-            {
-              name: {
-                type:String
-              },
-            reference: {
-            type: String
-          }
-            }
-          ],
-          default: []
     }
 })
 

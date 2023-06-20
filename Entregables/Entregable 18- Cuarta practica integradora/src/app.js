@@ -13,7 +13,6 @@ import dbConnect from '../db/index.js';
 import { errorHandler } from './middlewares/handler.errors.js';
 import { addLogger } from './middlewares/logger.js';
 
-
 const app = express();
 //Logger
 app.use(addLogger)

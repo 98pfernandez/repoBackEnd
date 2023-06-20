@@ -4,7 +4,7 @@ import { generateToken } from '../utils/jwt.utils.js';
 import { privateAccess } from '../middlewares/index.js';
 import UserService from "../services/users.service.js";
 import  {transport}  from "../config/email.config.js";
-import { upload, uploadFile } from '../middlewares/multer.js';
+import { upload} from '../middlewares/multer.js';
 const userService=new UserService();
 const router = Router();
 
@@ -45,8 +45,29 @@ router.get('/premium/:userEmail' , privateAccess, async (req, res) => {
     res.status(200).json({info:`the role of user ${userEmail} was changed from ${responseDBCreate.rol} to ${userInfo.rol}`});
 });
 
-router.post('/documents', upload.single('file'), async (req, res) => {
-  res.send({data:'archivo enviado'})
+router.post('/:userEmail/documents', upload.array('file', 10), async (req, res) => {
+try {
+  const {userEmail} = req.params;
+  const responseDBCreate=await userService.findUserByEmail(userEmail)
+  if (!responseDBCreate) return res.status(400).json({error:true, info:'user not found'});
+  
+  const fileNames = req.files.map(file => file.originalname);
+  const filePaths = req.files.map(file => file.path);
+
+  fileNames.forEach(fileName => {
+      
+  });
+
+  if(userEmail.document){
+    
+  }else{
+
+  }
+
+} catch (error) {
+  
+}
+  res.send({ data: 'archivos enviados', files: fileNames });
 } )
 
 export { router as userController };

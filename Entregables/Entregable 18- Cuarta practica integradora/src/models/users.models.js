@@ -19,6 +19,19 @@ const userSchema = new mongoose.Schema({
     default:'user'
   },
   last_connection: Date,
+  document:{
+      type: [
+          {
+            name: {
+              type:String
+            },
+          reference: {
+          type: String
+        }
+          }
+        ],
+        default: []
+  }
 })
 
 const UserModel = mongoose.model(userCollection, userSchema)
