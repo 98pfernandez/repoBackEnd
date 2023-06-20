@@ -48,22 +48,30 @@ router.get('/premium/:userEmail' , privateAccess, async (req, res) => {
 router.post('/:userEmail/documents', upload.array('file', 10), async (req, res) => {
 try {
   const {userEmail} = req.params;
-  const responseDBCreate=await userService.findUserByEmail(userEmail)
-  if (!responseDBCreate) return res.status(400).json({error:true, info:'user not found'});
+  const user=await userService.findUserByEmail(userEmail)
+  if (!user) return res.status(400).json({error:true, info:'user not found'});
   
   const fileNames = req.files.map(file => file.originalname);
   const filePaths = req.files.map(file => file.path);
 
-  fileNames.forEach(fileName => {
-      
-  });
-
-  if(userEmail.document){
-    
-  }else{
-
+  const documents=[];
+  
+  for (let i=0; i<fileNames.length; i++){
+    documents.push(
+      {
+        name: fileNames[i],
+        reference: filePaths[i]
+      }
+    )
   }
 
+  if(user.documents){
+    user.documents.concat(documents)
+  }else{
+    user.documents.push(documents)
+  }
+
+  userService.updateUser(userEmail, user)
 } catch (error) {
   
 }
