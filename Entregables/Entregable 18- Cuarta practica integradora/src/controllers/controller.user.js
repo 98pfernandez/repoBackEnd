@@ -33,7 +33,11 @@ router.get('/premium/:userEmail' , privateAccess, async (req, res) => {
 
     const responseDBCreate=await userService.findUserByEmail(userEmail)
     if (!responseDBCreate) return res.status(400).json({error:true, info:'user not found'});
-      
+
+    const namesToSearch = ['comprobante de domicilio', 'identificacion', 'comprobante de estado de cuenta'];
+    const filteredDocuments = responseDBCreate.documents.filter(obj => namesToSearch.includes((obj.name).split('.')[0].toLowerCase()));
+    if(filteredDocuments.length!=3) return res.status(404).json({ error: 'Necesita subir los siguientes documentos: comprobante de domicilio, identificacion y comprobante de estado de cuenta'});
+
     const userInfo={
       rol: responseDBCreate.rol =='premium'? 'user' : 'premium'
     }
@@ -65,17 +69,18 @@ try {
     )
   }
 
+  
   if(user.documents){
-    user.documents.concat(documents)
+    user.documents = user.documents.concat(documents);
   }else{
-    user.documents.push(documents)
+    user.documents=documents;
   }
 
   userService.updateUser(userEmail, user)
 } catch (error) {
-  
+  return res.send({ error});
 }
-  res.send({ data: 'archivos enviados', files: fileNames });
+  return res.send({ data: 'archivos enviados'});
 } )
 
 export { router as userController };
