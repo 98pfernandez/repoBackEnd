@@ -1,0 +1,135 @@
+openapi: "3.1.0"
+info:
+  title: API Users
+  version: "1.0"
+paths:
+  /carts/all:
+
+    get:
+      summary: Obtienes todos los carritos
+      tags:
+        - Carritos
+      responses:
+        "200":
+          description: Todos los carritos fueron obtenidos (Se devuelve como un handleBars)
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+
+  /carts:
+    post:
+      summary: Crea un carrito
+      tags:
+      - Carritos
+      responses:
+        "200":
+          description: Se creo nuevo carrito
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+    delete:
+      summary: Borra todos los carritos
+      tags:
+        - Carritos
+      responses:
+        "200":
+          description: Todos los carritos fueron borrados
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error          
+                  
+  /carts/{cartId}:
+    get:
+      summary: Obtienes un solo carrito
+      tags:
+        - Carritos
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: id del carrito que buscas
+          schema:
+            type: string
+      responses:
+        "200":
+          description: carrito encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Carts"
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+
+    delete:
+      summary: borra un carrito
+      tags:
+        - Carritos
+      parameters:
+        - name: cartID
+          in: path
+          required: true
+          description: id del carrito que borrarras
+          schema:
+            type: string
+      responses:
+        "200":
+          description: carrito borrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Carts"
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error      
+
+    patch:
+      summary: Actualiza un carrito
+      tags:
+      - Carritos
+      parameters:
+        - name: cartID
+          in: path
+          required: true
+          description: id del carrito que buscas
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/createUpdateCart"
+              responses:
+              "200":
+              description: carrito creado
+               
+              
+components:
+  schemas:
+    Carts:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id de mongo
+        products:
+          type: array
+          description: productos
+      example:
+         _id: ObjectId("87whc8hfte78hcs9dhg8")
+         products: [Keyboard, Mouse]
+
+
+  requestBodies:      
+    createUpdateCart:
+      description: Body con la info del carrito a crear/modificar
+      properties:
+        products:
+          type: array
+          description: Productos

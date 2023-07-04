@@ -10,8 +10,8 @@ const router = Router();
 
 router.get('/', async (req,res)=>{
   try {
-    const usersDB=await userService.getUsers();
-    const users = usersDB.map(({ email, name, rol }) => ({ email, name,rol  }));
+    const users=await userService.getUsers();
+
     res.json({users: users})
   } catch (error) {
     console.log(error)

@@ -1,0 +1,32 @@
+openapi: "3.1.0"
+info:
+  title: API Users
+  version: "1.0"
+  
+paths:
+  /users/premium/{userEmail}:
+    get:
+      summary: Cambia el rol del usuario de user a premium
+      parameters:
+        - name: userEmail
+          in: path
+          required: true
+        - name: authToken
+          in: cookie
+          description: Token de autenticación JWT
+          required: true
+      tags:
+        - "Users"
+      responses:
+        "200":
+          description: the rol was changed
+        "400":
+          description: Bad request
+      components:
+        securitySchemes:
+        cookieAuth:
+        type: apiKey
+        in: cookie
+        name: cookie
+        security:
+        - cookieAuth: []
