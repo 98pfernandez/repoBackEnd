@@ -19,7 +19,7 @@ trElements.forEach((tr) => {
     });
 });
 
-const url = 'http://localhost:8080/config'
+const url = '/config'
 const headers = {
     'Content-Type': 'application/json'
 }
