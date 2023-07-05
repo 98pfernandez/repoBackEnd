@@ -31,6 +31,9 @@
             <a href="../products" class="btn btn-outline-light mx-2">Products</a>
             <a href="../chats" class="btn btn-outline-light mx-2">Chat!</a>
             <a id="cartButtonA"  href="../carts" class="btn btn-outline-light mx-2"><i style="font-size: 1.8rem;" id="cartButton" class="fa-solid fa-cart-shopping "></i></a>
+            {{#if isAdmin}}
+            <a id="configButtonA"  href="../config" class="btn btn-outline-light mx-2"><i style="font-size: 1.8rem;" id="cartButton" class="fa-solid fa-gear"></i></a>
+             {{/if}}
             <a href="../auth/logout" class="btn btn-danger mx-2">Logout</a>
             {{/if}}
         </div>

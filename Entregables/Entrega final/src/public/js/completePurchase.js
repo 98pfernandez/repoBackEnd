@@ -20,12 +20,18 @@ buyButton.addEventListener("click", (event) => {
       return response.json()
     })
     .then(data => {
-        location.reload()
         if(data.insufficientStock) return Swal.fire(
           'Atención',
           'Los articulos que prevalecen en su carrito tienen un stock insuficiente.',
           'warning') 
-    })
+
+          return Swal.fire("Done", "The purchase was completed successfully", "success").then((result) => {
+            if (result.isConfirmed) {
+              // El usuario presionó "OK"
+              document.location.href = '/'
+            }})
+    }
+    )
     .catch(error => {
       alert('error')
       console.log(error)

@@ -19,9 +19,12 @@ router.get("/", privateAccess, async (req, res) => {
 
     let userInfo = {
       name:req.user.name,
-      rol: responseDBUser.rol=='premium'};
+      rol: responseDBUser.rol=='premium' || responseDBUser.rol=='admin'};
+
     const products = responseDB;
-    res.render("products.handlebars", { products, userInfo });
+
+    const isAdmin= responseDBUser.rol=="admin"?true:false;
+    res.render("products.handlebars", { products, userInfo, isAdmin});
   } catch (error) {
     console.log(error);
   }
@@ -62,7 +65,6 @@ router.post("/", async (req, res) => {
 
     //Create json
     const product = { title, description, code, price, stock, category, image, owner };
-    console.log(product)
     const response= await productService.createProduct(product)
 
     res.json({ response });

@@ -5,18 +5,65 @@ import { privateAccess } from '../middlewares/index.js';
 import UserService from "../services/users.service.js";
 import  {transport}  from "../config/email.config.js";
 import { upload} from '../middlewares/multer.js';
+import dotenv from 'dotenv';
 const userService=new UserService();
 const router = Router();
 
+//Variables de entorno:
+dotenv.config({ path: "../../.env" });
+
 router.get('/', async (req,res)=>{
   try {
-    const users=await userService.getUsers();
+    const usersDB=await userService.getUsers();
 
-    res.json({users: users})
+    const users= usersDB.map(({email, name, rol})=>({email, name, rol}));
+
+    res.json({users})
   } catch (error) {
     console.log(error)
   }
 })
+
+//borrar por dos dias o mas de inactividad
+router.delete('/', async (req,res)=>{
+  const usersDB=await userService.getUsers();
+  const arrEmailToDelete=[];
+  
+  usersDB.forEach(user => {
+      const userLastConnection=new Date(user.last_connection).getTime();
+      const currentDate= new Date().getTime();
+      const diffMiliSec = currentDate - userLastConnection;
+      const diffDays = diffMiliSec / (1000 * 60 * 60 * 24);
+
+    if(diffDays>2){
+      arrEmailToDelete.push(user.email)
+    }
+  });
+  
+  if(arrEmailToDelete.length>0){
+    try {
+      const responseDB=await userService.deleteManyUser(arrEmailToDelete)
+      const mail=process.env.MAILER_SERVICE;
+      
+      for(let i=0;i<arrEmailToDelete.length;i++){
+        await transport.sendMail({
+          from: mail,
+          to: arrEmailToDelete[i],
+          subject: 'Deleted account',
+          html:`
+          <p>Your account was deleted due to inactivity.</p>`, 
+          attachments:[]
+        })
+      }
+
+      return res.status(200).json({responseDB})
+    } catch (error) {
+      return res.status(400).json({error})
+    }
+  }
+
+  return res.status(200).json({info: "0 deletes"})
+  })
 
 router.post(
   '/',

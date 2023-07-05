@@ -1,0 +1,49 @@
+<script>
+  Handlebars.registerHelper('equals', function(a, b, options) {
+    if (a === b) {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
+</script>
+<script src="ruta/a/handlebars.min.js"></script>
+ 
+ 
+  <h1 style="text-align: center;">Lista de Usuarios</h1>
+  <table style="border-collapse: collapse; width: 100%;">
+    <thead>
+      <tr>
+        <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Correo Electrónico</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Nombre</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+      <tr>
+        <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{email}}</td>
+        <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{name}}</td>
+        <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">
+          <select style="padding: 8px; font-size: 14px; width: 100%; background-color: #f2f2f2; border: none; cursor: pointer;">
+             {{#if (equals rol "usuario")}}
+            <option value="usuario" selected>Usuario</option>
+          {{else}}
+            <option value="usuario">Usuario</option>
+          {{/if}}
+          {{#if (equals rol "admin")}}
+            <option value="admin" selected>Admin</option>
+          {{else}}
+            <option value="admin">Admin</option>
+          {{/if}}
+          {{#if (equals rol "premium")}}
+            <option value="premium" selected>Premium</option>
+          {{else}}
+            <option value="premium">Premium</option>
+          {{/if}}
+        </select>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>

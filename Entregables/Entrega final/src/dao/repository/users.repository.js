@@ -9,6 +9,14 @@ class UserRepository {
         }
     }
 
+    async deleteMany(usersEmail) {
+        try {
+            return await UserModel.deleteMany( {email: { $in: usersEmail } });
+        } catch (error) {
+            return { error };
+        }
+    }
+
     async createUser(userInfo) {
         try {
             return await UserModel.create(userInfo);
@@ -35,7 +43,7 @@ class UserRepository {
 
       async getUsers() {
         try {
-         return await UserModel.find()
+         return await UserModel.find().lean();
         } catch (error) {
             return error
         }

@@ -38,7 +38,11 @@ const url = '/products'
     return response.json()
   })
   .then(data => {
-    console.log(data)
+    Swal.fire("Done", "product was created!", "success").then((result) => {
+      if (result.isConfirmed) {
+        // El usuario presionó "OK"
+        document.location.href = '/products'
+      }})
   })
   .catch(error => {
     alert('error')

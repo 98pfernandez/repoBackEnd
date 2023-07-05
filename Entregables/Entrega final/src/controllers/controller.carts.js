@@ -81,7 +81,8 @@ router.get('/', privateAccess, async (req, res) => {
     try {
         const cartDB = await cartService.getCartById(cartId);
         const cart = cartDB.products;
-        res.render('cart.handlebars', { cart })
+        const isAdmin= req.user.rol=="admin";
+        res.render('cart.handlebars', { cart,isAdmin })
 
     } catch (error) {
         res.json(error)

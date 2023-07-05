@@ -18,6 +18,10 @@ updateUser(email, user) {
     return userRepository.updateUser(email, user);
   }
 
+  deleteManyUser(usersEmails){
+    return userRepository.deleteMany(usersEmails);
+  }
+
 getUsers(){
     return userRepository.getUsers();
  }

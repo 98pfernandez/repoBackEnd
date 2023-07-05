@@ -1,5 +1,4 @@
 import { Server } from 'socket.io';
-import chatModel from '../models/chat.models.js'
 import ChatService from '../services/chats.service.js';
 
 const chatService=new ChatService();
@@ -11,7 +10,7 @@ const socketServer= (httpServer) => {
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
-    req.logger.info("Usuario conectado!")
+    console.log("Usuario conectado!")
 
     socket.on('refresh', () => {
         io.emit('showAllProducts', arrayProducts);
