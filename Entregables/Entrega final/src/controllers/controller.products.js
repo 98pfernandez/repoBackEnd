@@ -5,6 +5,7 @@ import loadItems from "../utils/loadLocalFile.js";
 import UserService from "../services/users.service.js";
 const userService=new UserService();
 import dotenv from 'dotenv';
+import  {transport}  from "../config/email.config.js";
 //Variables de entorno:
 dotenv.config({ path: "../../.env" });
 
@@ -100,13 +101,18 @@ router.patch("/:productID", async(req, res) => {
 });
 
 //delete product
-router.delete("/", async (req, res) => {
+router.delete("/",privateAccess, async (req, res) => {
    const {productID} = req.body;
    const responseDB = await productService.getProductByID({ _id:productID });
-   const productOwner=
-   console.log(responseDB)
+   const productOwner=responseDB[0].owner;
+   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   let isPremiumOwner=false;
 
-   const isPremiumOwner=responseDB._id=="premium"|| responseDB._id=="admin"? true:false;
+    if(emailRegex.test(productOwner)){
+      const responseDBUser=await userService.findUserByEmail(productOwner);
+      isPremiumOwner= (responseDBUser.rol=="premium"|| responseDBUser.rol=="admin")? true:false;
+    }
+
 if (isPremiumOwner) {
   const mail=process.env.MAILER_SERVICE;
   const emailUser=req.user.email;
