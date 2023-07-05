@@ -18,6 +18,10 @@ updateUser(email, user) {
     return userRepository.updateUser(email, user);
   }
 
+  updateManyUser(prop, user) {
+    return userRepository.updateManyUser(prop, user);
+  }
+
   deleteManyUser(usersEmails){
     return userRepository.deleteMany(usersEmails);
   }

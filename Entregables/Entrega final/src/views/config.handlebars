@@ -1,45 +1,33 @@
-<script>
-  Handlebars.registerHelper('equals', function(a, b, options) {
-    if (a === b) {
-      return options.fn(this);
-    } else {
-      return options.inverse(this);
-    }
-  });
-</script>
-<script src="ruta/a/handlebars.min.js"></script>
- 
- 
-  <h1 style="text-align: center;">Lista de Usuarios</h1>
+<h1 style="text-align: center;">Lista de Usuarios</h1>
   <table style="border-collapse: collapse; width: 100%;">
     <thead>
       <tr>
-        <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Correo Electrónico</th>
-        <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Nombre</th>
-        <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Rol</th>
+        <th style="padding: 8px; text-align: left; border 1px solid #ddd; background-color: #f2f2f2;">Correo Electrónico</th>
+        <th style="padding: 8px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;">Nombre</th>
+        <th style="padding: 8px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;">Rol</th>
       </tr>
     </thead>
     <tbody>
       {{#each users}}
       <tr>
-        <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{email}}</td>
-        <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{name}}</td>
-        <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">
+        <td style="padding: 8px; text-align: left; border: 1px solid #979696;">{{email}}</td>
+        <td contenteditable style="padding: 8px; text-align: left; border: 1px solid #979696;">{{name}}</td>
+        <td style="padding: 8px; text-align: left; border: 1px solid #979696;">
           <select style="padding: 8px; font-size: 14px; width: 100%; background-color: #f2f2f2; border: none; cursor: pointer;">
-             {{#if (equals rol "usuario")}}
-            <option value="usuario" selected>Usuario</option>
+             {{#if (equals rol "user")}}
+            <option value="user" selected>user</option>
           {{else}}
-            <option value="usuario">Usuario</option>
+            <option value="user">user</option>
           {{/if}}
           {{#if (equals rol "admin")}}
-            <option value="admin" selected>Admin</option>
+            <option value="admin" selected>admin</option>
           {{else}}
-            <option value="admin">Admin</option>
+            <option value="admin">admin</option>
           {{/if}}
           {{#if (equals rol "premium")}}
-            <option value="premium" selected>Premium</option>
+            <option value="premium" selected>premium</option>
           {{else}}
-            <option value="premium">Premium</option>
+            <option value="premium">premium</option>
           {{/if}}
         </select>
         </td>
@@ -47,3 +35,9 @@
       {{/each}}
     </tbody>
   </table>
+
+<div style="text-align: center; margin-top: 10vh;">
+  <button id="saveUsers" style="margin: 0 auto;">Save Changes</button>
+</div>
+
+<script src="/js/updateUsersAdmin.js"></script>

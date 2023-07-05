@@ -21,10 +21,25 @@ app.use(addLogger)
 app.use(express.json());
 
 //HandleBars
-app.engine('handlebars', handlebars.engine());
+//app.engine('handlebars', handlebars.engine());
+
+const hbs=handlebars.create({
+  helpers:{
+    equals: function(a, b){
+      if (a === b) {
+          return true;
+        } 
+          return false;
+}
+  }
+});
+
+app.engine('handlebars', hbs.engine);
+
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars');
 app.use(express.static(__dirname))
+
 
 //errorHandler
 

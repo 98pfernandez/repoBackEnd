@@ -41,6 +41,14 @@ class UserRepository {
         }
       }
 
+      async updateManyUser(prop, user) {
+        try {
+          return await UserModel.updateMany({ prop }, { $set: user }); 
+        } catch (error) {
+          return { error };
+        }
+      }
+
       async getUsers() {
         try {
          return await UserModel.find().lean();
