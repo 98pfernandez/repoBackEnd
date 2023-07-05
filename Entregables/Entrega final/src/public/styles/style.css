@@ -87,6 +87,19 @@
   background-color: gray;
 }
 
+.deleteProduct {
+  margin-top: 5%;
+  margin-left: 0%;
+  width: 50%;
+  height: 100%;
+  border-radius: 15%;
+}
+
+.deleteProduct:hover {
+  cursor: pointer;
+  background-color: gray;
+}
+
 * {
   margin: 0;
   padding: 0;

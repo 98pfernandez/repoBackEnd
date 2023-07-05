@@ -17,7 +17,6 @@ router.get('/',adminAccess, async (req,res)=>{
 
 router.patch('/', async(req,res)=>{
 const {users}=req.body;
-console.log(users)
 const responseDB=[];
 try {
   for (let i=0; i<users.length;i++){

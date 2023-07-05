@@ -4,6 +4,9 @@ import ProductService from "../services/products.service.js";
 import loadItems from "../utils/loadLocalFile.js";
 import UserService from "../services/users.service.js";
 const userService=new UserService();
+import dotenv from 'dotenv';
+//Variables de entorno:
+dotenv.config({ path: "../../.env" });
 
 const productService = new ProductService();
 const router = Router();
@@ -23,8 +26,9 @@ router.get("/", privateAccess, async (req, res) => {
 
     const products = responseDB;
 
-    const isAdmin= responseDBUser.rol=="admin"?true:false;
-    res.render("products.handlebars", { products, userInfo, isAdmin});
+    const isAdmin=req.user && (req.user.rol=="admin");
+    const specialUser=req.user && (req.user.rol=="admin" || req.user.rol=="premium")? true: false;
+    res.render('products.handlebars', {userInfo, products, specialUser,isAdmin});
   } catch (error) {
     console.log(error);
   }
@@ -96,11 +100,29 @@ router.patch("/:productID", async(req, res) => {
 });
 
 //delete product
-router.delete("/:productID", async (req, res) => {
-   const {productID} = req.params;
+router.delete("/", async (req, res) => {
+   const {productID} = req.body;
+   const responseDB = await productService.getProductByID({ _id:productID });
+   const productOwner=
+   console.log(responseDB)
 
+   const isPremiumOwner=responseDB._id=="premium"|| responseDB._id=="admin"? true:false;
+if (isPremiumOwner) {
+  const mail=process.env.MAILER_SERVICE;
+  const emailUser=req.user.email;
+
+  await transport.sendMail({
+    from: mail,
+    to: emailUser,
+    subject: 'Product deleted',
+    html:`
+    <p>The product with id ${productID} was deleted.</p>`, 
+    attachments:[]
+  })
+}
+   
   const response = await productService.deleteProduct(productID)
-  res.json({ response });
+  return res.json({ response });
 });
 
 //delete allProducts
