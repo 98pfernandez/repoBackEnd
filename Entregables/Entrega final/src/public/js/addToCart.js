@@ -23,7 +23,6 @@ buttons.forEach((button) => {
       body
     })
     .then(response => {
-      statusVar = response.status;
       return response.json()
     })
     .then(data => {

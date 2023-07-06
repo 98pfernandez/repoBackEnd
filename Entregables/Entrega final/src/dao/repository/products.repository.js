@@ -3,18 +3,17 @@ import dotenv from "dotenv";
 
 //Variables de entorno:
 dotenv.config({path: '../../.env'})
-const serverPORT = process.env.SERVER_PORT;
 
 class ProductRepository {
   //metodo para buscar en la BD para la coleccion products
-  async find(query, queryData, limit, page, sort) {
+  async find(query, queryData, limit, page, sort, urlLink) {
     try {
       const products = await productModel.paginate(
         { [query]: queryData },
         { limit, page, sort: { price: sort }, lean: true }
       );
 
-      let urlBase = `http://localhost:${serverPORT}/products/?`;
+      let urlBase = `${urlLink}/products/?`;
 
       products.nextLink = products.hasNextPage
         ? this.getUrlWithParameters(

@@ -21,7 +21,7 @@ app.use(addLogger)
 app.use(express.json());
 
 //HandleBars
-//app.engine('handlebars', handlebars.engine());
+//Helper
 
 const hbs=handlebars.create({
   helpers:{

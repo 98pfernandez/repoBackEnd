@@ -8,6 +8,8 @@ const userService=new UserService();
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { hashPassword } from "../utils/passwordEncryptor.js";
+import getCurrentURL from "../utils/getCurrentURL.js";
+
 
 //Variables de entorno:
 dotenv.config({ path: "../../.env" });
@@ -53,14 +55,9 @@ router.get(
   "/gitHubCallBack",
   passport.authenticate("github", { failureRedirect: "/login", session: false }),
   async (req, res) => {
-    // Successful authentication, redirect home.
-    req.session.user = {
-      name: req.user.name,
-      email: req.user.email,
-      role: req.user.email == "adminCoder@coder.com" ? "admin" : "user",
-    };
-
-    res.redirect("/");
+    const userToken = req.user
+    const token = generateToken(userToken);
+    res.cookie("authToken", token, { httpOnly: true }).redirect("/");
   }
 );
 
@@ -76,8 +73,7 @@ router.get("/logout", async (req, res) => {
   const userLastConnection={
     last_connection:Date.now()
   }
-  const response=await userService.updateUser(email, userLastConnection);
-  console.log(response)
+  await userService.updateUser(email, userLastConnection);
   
   res.clearCookie('authToken').redirect("/");
 });
@@ -112,10 +108,10 @@ router.post("/sendMailRestore", async (req, res) => {
 
     const mail=process.env.MAILER_SERVICE;
     const claveSecreta = process.env.JWT_SECRET;
-    const port = process.env.SERVER_PORT;
     const tiempoExpiracion = '5m';
     const token = jwt.sign({email:user.email}, claveSecreta, { expiresIn: tiempoExpiracion });
-    const enlace = `http://localhost:${port}/auth/restorePass?token=${token}`;
+    const urlBase=getCurrentURL(req);
+    const enlace = `${urlBase}/auth/restorePass?token=${token}`;
 
     const result = await transport.sendMail({
       from: mail,

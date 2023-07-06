@@ -114,18 +114,30 @@ const initializePassport = () => {
         new GitHubStrategy({
             clientID: 'Iv1.f533d90f13aba87c',
             clientSecret: '6a23f0193bb0739140f5aaeba60da0dba007a265',
-            callbackURL: `http://localhost:${serverPORT}/auth/gitHubCallBack`
+            callbackURL: "/auth/gitHubCallBack",
+            proxy: true
         },
             async (accessToken, refreshToken, profile, done) => {
                 try {
                     const user = await userService.findUserByEmail( profile._json.email);
                     if (!user) {
                         const userLoginWGit = {
-                            name: profile._json.name,
+                            name: profile._json.name?profile._json.name: "gitHubUser",
                             email: profile._json.email,
+                            last_connection:new Date(),
                             pass: ''
                         };
-
+                        let cartId=null;
+                    try {
+                        const cart = await cartService.createCart()
+                        cartId=cart._id;
+                    } catch (error) {
+                        req.logger.warning('error creating cart');
+                    }
+                    //Le asignamos un carrito
+                    userLoginWGit.cart=cartId;
+                        //Si no tiene mail publico no lo registramos en nuestra base de datos
+                        if(!profile._json.email) return done(null, userLoginWGit);
                         const newUser = await userService.createUser(userLoginWGit);
                         return done(null, newUser);
                     }

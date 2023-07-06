@@ -1,13 +1,10 @@
 import ProductDTO from "../DTOs/product.dto.js";
 import ProductRepository from "../dao/repository/products.repository.js"
-import CustomError from "../utils/errors/Custom.error.js";
-import generateProductErrorInfo from "../utils/errors/info.error.js";
-import EnumError from "../utils/errors/enum.error.js";
 const productRepository=new ProductRepository();
 
 
 class ProductService {
- getProducts(query,queryData, limit,page,sort) {
+ getProducts(query,queryData, limit,page,sort, urlBase) {
     //Seteamos la paginación 
     limit = limit || 10;
     page =  page || 1;
@@ -16,7 +13,7 @@ class ProductService {
     queryData =queryData || null;
 
 
-    return productRepository.find(query,queryData, limit,page,sort)
+    return productRepository.find(query,queryData, limit,page,sort,urlBase)
   }
 
   getProductByID(id){

@@ -12,8 +12,8 @@
             <img class="productImage" src="{{this.image}}" alt="">
             <div>{{this.price}} US$</div>
             <div>stock left: {{this.stock}}</div>
-            {{#if ../specialUser}}
             <button class="productButton">Add to cart</button>
+            {{#if ../specialUser}}
             <button class="deleteProduct">Delete</button>
             {{/if}}
         </div>
