@@ -10,7 +10,7 @@ import cookieExtractor from '../utils/cookieExtractor.js';
 
 //Variables de entorno:
 dotenv.config({ path: "../../.env" });
-const serverPORT = process.env.SERVER_PORT;
+const serverURL = process.env.SERVER_IP;
 const jwtSECRET= process.env.JWT_SECRET;
 
 const userService=new UserService();
@@ -114,7 +114,7 @@ const initializePassport = () => {
         new GitHubStrategy({
             clientID: 'Iv1.f533d90f13aba87c',
             clientSecret: '6a23f0193bb0739140f5aaeba60da0dba007a265',
-            callbackURL: "/auth/gitHubCallBack",
+            callbackURL: serverURL+"/auth/gitHubCallBack",
             proxy: true
         },
             async (accessToken, refreshToken, profile, done) => {
